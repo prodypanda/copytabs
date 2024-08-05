@@ -11,6 +11,7 @@ This Visual Studio Code extension allows you to copy the content of all opened t
 - Configurable file type inclusion/exclusion
 - Option to include or exclude comments
 - Customizable separator between files
+- Keyboard shortcut for quick access
 
 ## Use Cases
 
@@ -83,15 +84,20 @@ There are no known issues at this time. If you encounter any problems, please fi
 
 ## Release Notes
 
-### 0.0.2
+### 0.0.3-alpha
+
+- Updated extension icon for better clarity
+- Improved documentation and README
+
+### 0.0.2-alpha
 
 - Added configuration options for file type inclusion/exclusion
 - Added option to include/exclude comments
 - Added customizable separator between files
 - Improved error handling and user feedback
-- Added keyboard shortcut
+- Added keyboard shortcut (Ctrl+Shift+C on Windows/Linux, Cmd+Shift+C on macOS)
 
-### 0.0.1
+### 0.0.1-alpha
 
 Initial release of Copy All Tabs to New Tab
 
@@ -105,7 +111,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-[MIT License](LICENSE.md)
+This extension is licensed under the [MIT License](LICENSE.md).
 
 ## Support
 
