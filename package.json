@@ -1,8 +1,8 @@
 {
   "name": "copytabs",
-  "displayName": "copytabs",
-  "description": "nan",
-  "version": "0.0.1",
+  "displayName": "copytabs for VSCode",
+  "description": "This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab, including their file locations. Perfect for sharing code context with AI assistants, code reviews, documentation, debugging, and teaching. Easily compile and share your entire project or selected files with configurable options for a seamless workflow.",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -11,18 +11,52 @@
   ],
   "activationEvents": ["*"],
   "main": "./out/copytabs.js",
-"icon": "icon.png",  
+  "icon": "icon.png",  
   "contributes": {
-    
-
+    "configuration": {
+      "title": "Copy All Tabs",
+      "properties": {
+        "copytabs.includeFileTypes": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "File types to include in the copy process. Leave empty to include all files."
+        },
+        "copytabs.excludeFileTypes": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "File types to exclude from the copy process."
+        },
+        "copytabs.separatorLine": {
+          "type": "string",
+          "default": "------------------------",
+          "description": "The separator line to use between files."
+        },
+        "copytabs.includeComments": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to include comments in the copied content."
+        }
+      }
+    },
     "commands": [
-    {
-      "command": "copytabs.copyAllTabs",
-      "title": "Copy All Tabs to New Tab"
-    }
-  ]
-
-
+      {
+        "command": "copytabs.copyAllTabs",
+        "title": "Copy All Tabs to New Tab"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "copytabs.copyAllTabs",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c"
+      }
+    ]
   },
   "repository": {
     "type": "git",
