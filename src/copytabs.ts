@@ -17,13 +17,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     statusBarItemSelected = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
     statusBarItemSelected.text = "$(list-selection) Copy Selected";
-    statusBarItemSelected.tooltip = "Copy selected tabs to a new tab";
+    statusBarItemSelected.tooltip = "Copy selected tabs to a new tab, `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)";
     statusBarItemSelected.command = 'copytabs.copySelectedTabs';
     statusBarItemSelected.show();
 
     statusBarItemCustom = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 98);
     statusBarItemCustom.text = "$(settings-gear) Copy Custom";
-    statusBarItemCustom.tooltip = "Copy tabs with custom format";
+    statusBarItemCustom.tooltip = "Copy tabs with custom format, `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)";
     statusBarItemCustom.command = 'copytabs.copyTabsCustomFormat';
     statusBarItemCustom.show();
 

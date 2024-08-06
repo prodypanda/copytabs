@@ -11,7 +11,7 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 - Copies the content of all opened tabs into a single new tab
 - Selectively copy chosen tabs
 - Custom formatting option for copied content
-- Includes a structured file tree for better context (NEW!)
+- Includes a structured file tree for better context
 - Includes the file location at the top of each file's content
 - Preserves the order of the tabs as they appear in your editor
 - Adds convenient status bar items for quick access
@@ -48,24 +48,40 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 
 There are three main features, each accessible via the status bar, command palette, or keyboard shortcut:
 
-1. Copy All Tabs:
-   - Status Bar: Click on the "$(files) Copy All" item
-   - Command Palette: "Copy All Tabs to New Tab"
-   - Keyboard Shortcut: `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (macOS)
+### 1. Copy All Tabs:
+- Status Bar: Click on the "$(files) Copy All" item
+- Command Palette: "Copy All Tabs to New Tab"
+- Keyboard Shortcut: `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (macOS)
 
-2. Copy Selected Tabs:
-   - Status Bar: Click on the "$(list-selection) Copy Selected" item
-   - Command Palette: "Copy Selected Tabs to New Tab"
-   - Keyboard Shortcut: `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)
+![Copy All Tabs Demo](src/assets/copyallbtn.gif)
 
-3. Copy Tabs with Custom Format:
-   - Status Bar: Click on the "$(settings-gear) Copy Custom" item
-   - Command Palette: "Copy Tabs with Custom Format"
-   - Keyboard Shortcut: `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)
+### 2. Copy Selected Tabs:
+- Status Bar: Click on the "$(list-selection) Copy Selected" item
+- Command Palette: "Copy Selected Tabs to New Tab"
+- Keyboard Shortcut: `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)
 
-A new tab will open containing the content of your tabs based on the chosen option.
+![Copy Selected Tabs Demo](src/assets/copyselected.gif)
 
-### New Feature: Structured File Tree
+### 3. Copy Tabs with Custom Format:
+- Status Bar: Click on the "$(settings-gear) Copy Custom" item
+- Command Palette: "Copy Tabs with Custom Format"
+- Keyboard Shortcut: `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)
+
+![Copy Custom with Tree Demo](src/assets/copycustomwithtree.gif)
+
+### Using Commands:
+
+You can also access all features through the Command Palette (F1 or Ctrl+Shift+P / Cmd+Shift+P):
+
+![Using Commands Demo](src/assets/f1.gif)
+
+### Extension Settings:
+
+Customize the extension behavior through VS Code settings:
+
+![Extension Settings Demo](src/assets/extensionsettings.gif)
+
+## Structured File Tree
 
 When enabled, a structured file tree is included at the top (or bottom) of the copied content, providing a clear overview of your project structure. This feature is especially useful when sharing your codebase with AI assistants or during code reviews.
 
@@ -88,8 +104,8 @@ This extension contributes the following settings:
 - `copytabs.separatorLine`: The separator line to use between files.
 - `copytabs.includeComments`: Whether to include comments in the copied content.
 - `copytabs.includeLineNumbers`: Include line numbers in the copied content.
-- `copytabs.includeFileTree`: Include a structured file tree in the copied content (NEW!).
-- `copytabs.structuredTreePosition`: Position to include the structured file tree (start or end of the document) (NEW!).
+- `copytabs.includeFileTree`: Include a structured file tree in the copied content.
+- `copytabs.structuredTreePosition`: Position to include the structured file tree (start or end of the document).
 
 You can modify these settings in your VS Code settings.json file.
 
