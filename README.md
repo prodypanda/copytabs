@@ -9,13 +9,16 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 ## 🚀 Key Features
 
 - Copies the content of all opened tabs into a single new tab
+- Selectively copy chosen tabs
+- Custom formatting option for copied content
+- Includes a structured file tree for better context (NEW!)
 - Includes the file location at the top of each file's content
 - Preserves the order of the tabs as they appear in your editor
-- Adds a convenient status bar item for quick access
+- Adds convenient status bar items for quick access
 - Configurable file type inclusion/exclusion
 - Option to include or exclude comments
 - Customizable separator between files
-- Keyboard shortcut for quick access
+- Keyboard shortcuts for quick access
 
 ## 💡 Use Cases
 
@@ -43,25 +46,34 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 
 ## 🖱️ Usage
 
-There are three ways to use this extension:
+There are three main features, each accessible via the status bar, command palette, or keyboard shortcut:
 
-1. Status Bar:
-   - Click on the "$(files) Copy All Tabs" item in the status bar
+1. Copy All Tabs:
+   - Status Bar: Click on the "$(files) Copy All" item
+   - Command Palette: "Copy All Tabs to New Tab"
+   - Keyboard Shortcut: `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (macOS)
 
-2. Command Palette:
-   - Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (macOS) to open the Command Palette
-   - Type "Copy All Tabs to New Tab" and select the command
+2. Copy Selected Tabs:
+   - Status Bar: Click on the "$(list-selection) Copy Selected" item
+   - Command Palette: "Copy Selected Tabs to New Tab"
+   - Keyboard Shortcut: `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)
 
-3. Keyboard Shortcut:
-   - Use `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (macOS)
+3. Copy Tabs with Custom Format:
+   - Status Bar: Click on the "$(settings-gear) Copy Custom" item
+   - Command Palette: "Copy Tabs with Custom Format"
+   - Keyboard Shortcut: `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)
 
-A new tab will open containing the content of all your opened tabs, with each file's location at the top of its content.
+A new tab will open containing the content of your tabs based on the chosen option.
+
+### New Feature: Structured File Tree
+
+When enabled, a structured file tree is included at the top (or bottom) of the copied content, providing a clear overview of your project structure. This feature is especially useful when sharing your codebase with AI assistants or during code reviews.
 
 ## 🤖 Example Workflow with AI Code Assistant
 
 1. Open all relevant files in your VS Code project.
-2. Use the extension to copy all tabs to a new tab.
-3. Copy the entire content of the new tab.
+2. Use the extension to copy all tabs (or selected tabs) to a new tab.
+3. Copy the entire content of the new tab, including the structured file tree.
 4. Open your preferred AI code assistant (e.g., ChatGPT).
 5. Paste the copied content and ask for code review, optimization suggestions, or any other coding assistance.
 
@@ -75,6 +87,9 @@ This extension contributes the following settings:
 - `copytabs.excludeFileTypes`: File types to exclude from the copy process.
 - `copytabs.separatorLine`: The separator line to use between files.
 - `copytabs.includeComments`: Whether to include comments in the copied content.
+- `copytabs.includeLineNumbers`: Include line numbers in the copied content.
+- `copytabs.includeFileTree`: Include a structured file tree in the copied content (NEW!).
+- `copytabs.structuredTreePosition`: Position to include the structured file tree (start or end of the document) (NEW!).
 
 You can modify these settings in your VS Code settings.json file.
 
@@ -88,26 +103,15 @@ There are no known issues at this time. If you encounter any problems, please fi
 
 ## 📝 Release Notes
 
-### 0.0.3-alpha
+### 0.1.0
 
-- Updated extension icon for better clarity
-- Improved documentation and README
+- Added "Copy Selected Tabs" feature
+- Added "Copy Tabs with Custom Format" feature
+- Added structured file tree feature
+- Added keyboard shortcuts for new features
+- Updated status bar items for quick access to all features
 
-### 0.0.2-alpha
-
-- Added configuration options for file type inclusion/exclusion
-- Added option to include/exclude comments
-- Added customizable separator between files
-- Improved error handling and user feedback
-- Added keyboard shortcut (Ctrl+Shift+C on Windows/Linux, Cmd+Shift+C on macOS)
-
-### 0.0.1-alpha
-
-Initial release of Copy All Tabs to New Tab
-
-- Feature: Copy all opened tabs to a new tab
-- Feature: Include file locations at the top of each file's content
-- Feature: Status bar item for quick access
+For a full list of changes, please see the [CHANGELOG.md](CHANGELOG.md) file.
 
 ## 🤝 Contributing
 

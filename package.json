@@ -46,13 +46,37 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to include comments in the copied content."
-        }
+        },
+        "copytabs.includeLineNumbers": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include line numbers in the copied content"
+        },
+        "copytabs.includeFileTree": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include a structured file tree at the top of the copied content"
+      },
+      "copytabs.structuredTreePosition": {
+        "type": "string",
+        "enum": ["start", "end"],
+        "default": "start",
+        "description": "Position to include the structured file tree (start or end of the document)"
+      }
       }
     },
     "commands": [
       {
         "command": "copytabs.copyAllTabs",
         "title": "Copy All Tabs to New Tab"
+      },
+      {
+        "command": "copytabs.copySelectedTabs",
+        "title": "Copy Selected Tabs to New Tab"
+      },
+      {
+        "command": "copytabs.copyTabsCustomFormat",
+        "title": "Copy Tabs with Custom Format"
       }
     ],
     "keybindings": [
@@ -60,6 +84,16 @@
         "command": "copytabs.copyAllTabs",
         "key": "ctrl+shift+c",
         "mac": "cmd+shift+c"
+      },
+      {
+        "command": "copytabs.copySelectedTabs",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s"
+      },
+      {
+        "command": "copytabs.copyTabsCustomFormat",
+        "key": "ctrl+shift+f",
+        "mac": "cmd+shift+f"
       }
     ]
   },
