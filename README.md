@@ -119,6 +119,11 @@ There are no known issues at this time. If you encounter any problems, please fi
 
 ## 📝 Release Notes
 
+### 0.1.1
+
+- Added demonstration videos to the README for better feature visualization
+- Various bug fixes and performance improvements
+
 ### 0.1.0
 
 - Added "Copy Selected Tabs" feature
