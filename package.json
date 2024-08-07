@@ -3,7 +3,7 @@
   "displayName": "copytabs for VSCode",
   "description": "This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab, including their file locations. Perfect for sharing code context with AI assistants, code reviews, documentation, debugging, and teaching. Easily compile and share your entire project or selected files with configurable options for a seamless workflow.",
   "publisher": "Prodypanda",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "bugs": {
     "url": "https://github.com/prodypanda/copytabs/issues"
   },
@@ -53,16 +53,31 @@
           "description": "Include line numbers in the copied content"
         },
         "copytabs.includeFileTree": {
-        "type": "boolean",
-        "default": true,
-        "description": "Include a structured file tree at the top of the copied content"
-      },
-      "copytabs.structuredTreePosition": {
-        "type": "string",
-        "enum": ["start", "end"],
-        "default": "start",
-        "description": "Position to include the structured file tree (start or end of the document)"
-      }
+          "type": "boolean",
+          "default": true,
+          "description": "Include a structured file tree at the top of the copied content"
+        },
+        "copytabs.structuredTreePosition": {
+          "type": "string",
+          "enum": ["start", "end"],
+          "default": "start",
+          "description": "Position to include the structured file tree (start or end of the document)"
+        },
+        "copytabs.showCopyAllButton": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the 'Copy All' button in the status bar"
+        },
+        "copytabs.showCopySelectedButton": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the 'Copy Selected' button in the status bar"
+        },
+        "copytabs.showCopyCustomButton": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the 'Copy Custom' button in the status bar"
+        }
       }
     },
     "commands": [

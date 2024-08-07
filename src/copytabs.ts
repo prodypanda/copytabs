@@ -1,69 +1,84 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 
-let statusBarItem: vscode.StatusBarItem;
-// New status bar item for copySelectedTabs
-let statusBarItemSelected: vscode.StatusBarItem;
-// New status bar item for copyTabsCustomFormat
-let statusBarItemCustom: vscode.StatusBarItem;
+let statusBarItem: vscode.StatusBarItem | undefined;
+let statusBarItemSelected: vscode.StatusBarItem | undefined;
+let statusBarItemCustom: vscode.StatusBarItem | undefined;
 export function activate(context: vscode.ExtensionContext) {
     console.log('copytabs: Activating extension');
 
-    statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.text = "$(files) Copy All";
-    statusBarItem.tooltip = "Copy all opened tabs to a new tab, `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (macOS)";
-    statusBarItem.command = 'copytabs.copyAllTabs';
-    statusBarItem.show();
+    // Create status bar items
+    createStatusBarItems();
 
-    statusBarItemSelected = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
-    statusBarItemSelected.text = "$(list-selection) Copy Selected";
-    statusBarItemSelected.tooltip = "Copy selected tabs to a new tab, `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)";
-    statusBarItemSelected.command = 'copytabs.copySelectedTabs';
-    statusBarItemSelected.show();
-
-    statusBarItemCustom = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 98);
-    statusBarItemCustom.text = "$(settings-gear) Copy Custom";
-    statusBarItemCustom.tooltip = "Copy tabs with custom format, `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)";
-    statusBarItemCustom.command = 'copytabs.copyTabsCustomFormat';
-    statusBarItemCustom.show();
-
-    
-
-    let disposable = vscode.commands.registerCommand('copytabs.copyAllTabs', async () => {
-        try {
-            await copyAllTabs();
-        } catch (error) {
-            if (error instanceof Error) {
-                vscode.window.showErrorMessage(`Error copying tabs: ${error.message}`);
-            } else {
-                vscode.window.showErrorMessage('An unknown error occurred while copying tabs');
-            }
-        }
-    });
-
-    context.subscriptions.push(disposable);
-    context.subscriptions.push(statusBarItem, statusBarItemSelected, statusBarItemCustom);
-
-    // New command to copy selected tabs
-    context.subscriptions.push(vscode.commands.registerCommand('copytabs.copySelectedTabs', async () => {
-        try {
-            await copySelectedTabs();
-        } catch (error) {
-            vscode.window.showErrorMessage(`Error copying selected tabs: ${error}`);
+    // Register configuration change listener
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('copytabs')) {
+            updateStatusBarItems();
         }
     }));
 
-    // New command to copy tabs with custom format
-    context.subscriptions.push(vscode.commands.registerCommand('copytabs.copyTabsCustomFormat', async () => {
-        try {
-            await copyTabsCustomFormat();
-        } catch (error) {
-            vscode.window.showErrorMessage(`Error copying tabs with custom format: ${error}`);
-        }
-    }));
+    // Register commands
+    context.subscriptions.push(
+        vscode.commands.registerCommand('copytabs.copyAllTabs', copyAllTabs),
+        vscode.commands.registerCommand('copytabs.copySelectedTabs', copySelectedTabs),
+        vscode.commands.registerCommand('copytabs.copyTabsCustomFormat', copyTabsCustomFormat)
+    );
 
     console.log('copytabs: Extension activated');
 }
+
+
+function createStatusBarItems() {
+    const config = vscode.workspace.getConfiguration('copytabs');
+
+    if (config.get<boolean>('showCopyAllButton')) {
+        statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+        statusBarItem.text = "$(files) Copy All";
+        statusBarItem.tooltip = "Copy all opened tabs to a new tab";
+        statusBarItem.command = 'copytabs.copyAllTabs';
+        statusBarItem.show();
+    }
+
+    if (config.get<boolean>('showCopySelectedButton')) {
+        statusBarItemSelected = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
+        statusBarItemSelected.text = "$(list-selection) Copy Selected";
+        statusBarItemSelected.tooltip = "Copy selected tabs to a new tab";
+        statusBarItemSelected.command = 'copytabs.copySelectedTabs';
+        statusBarItemSelected.show();
+    }
+
+    if (config.get<boolean>('showCopyCustomButton')) {
+        statusBarItemCustom = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 98);
+        statusBarItemCustom.text = "$(settings-gear) Copy Custom";
+        statusBarItemCustom.tooltip = "Copy tabs with custom format";
+        statusBarItemCustom.command = 'copytabs.copyTabsCustomFormat';
+        statusBarItemCustom.show();
+    }
+}
+
+
+function updateStatusBarItems() {
+    const config = vscode.workspace.getConfiguration('copytabs');
+
+    if (config.get<boolean>('showCopyAllButton')) {
+        statusBarItem?.show();
+    } else {
+        statusBarItem?.hide();
+    }
+
+    if (config.get<boolean>('showCopySelectedButton')) {
+        statusBarItemSelected?.show();
+    } else {
+        statusBarItemSelected?.hide();
+    }
+
+    if (config.get<boolean>('showCopyCustomButton')) {
+        statusBarItemCustom?.show();
+    } else {
+        statusBarItemCustom?.hide();
+    }
+}
+
 
 async function copyAllTabs() {
     const config = vscode.workspace.getConfiguration('copytabs');
@@ -290,9 +305,9 @@ function generateStructuredFileTree(tabs: vscode.Tab[]): string {
 
 
 export function deactivate() {
-    if (statusBarItem) {
-        statusBarItem.dispose();
-    }
+    statusBarItem?.dispose();
+    statusBarItemSelected?.dispose();
+    statusBarItemCustom?.dispose();
 }
 
 

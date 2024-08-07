@@ -14,7 +14,7 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 - Includes a structured file tree for better context
 - Includes the file location at the top of each file's content
 - Preserves the order of the tabs as they appear in your editor
-- Adds convenient status bar items for quick access
+- Adds convenient status bar items for quick access (customizable)
 - Configurable file type inclusion/exclusion
 - Option to include or exclude comments
 - Customizable separator between files
@@ -106,8 +106,17 @@ This extension contributes the following settings:
 - `copytabs.includeLineNumbers`: Include line numbers in the copied content.
 - `copytabs.includeFileTree`: Include a structured file tree in the copied content.
 - `copytabs.structuredTreePosition`: Position to include the structured file tree (start or end of the document).
+- `copytabs.showCopyAllButton`: Show the 'Copy All' button in the status bar.
+- `copytabs.showCopySelectedButton`: Show the 'Copy Selected' button in the status bar.
+- `copytabs.showCopyCustomButton`: Show the 'Copy Custom' button in the status bar.
 
-You can modify these settings in your VS Code settings.json file.
+You can modify these settings in your VS Code settings.json file. For example, to hide the "Copy Custom" button, you would add the following to your settings:
+
+```json
+"copytabs.showCopyCustomButton": false
+```
+
+This allows you to customize which buttons appear in your status bar, optimizing your workspace according to your needs and preferences.
 
 ## 📋 Requirements
 
@@ -118,6 +127,19 @@ This extension requires Visual Studio Code version 1.91.0 or higher.
 There are no known issues at this time. If you encounter any problems, please file an issue on the GitHub repository.
 
 ## 📝 Release Notes
+
+## [0.1.2] - 2024-08-07
+
+### Added
+- New configuration options to control the visibility of status bar buttons:
+  - `copytabs.showCopyAllButton`
+  - `copytabs.showCopySelectedButton`
+  - `copytabs.showCopyCustomButton`
+- Dynamic update of status bar items when configuration changes
+
+### Changed
+- Updated README with information about new configuration options
+- Improved code structure to support customizable status bar items
 
 ### 0.1.1
 
