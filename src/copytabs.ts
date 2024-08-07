@@ -234,23 +234,35 @@ async function copyTabsCustomFormat() {
 
 
 function removeComments(content: string, fileExtension: string): string {
-    // This is a simple implementation and might not cover all cases
-    // You may want to use a more robust solution for removing comments
-    switch (fileExtension) {
-        case 'js':
-        case 'ts':
-        case 'java':
-        case 'c':
-        case 'cpp':
-            return content.replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '');
-        case 'py':
-            return content.replace(/#.*|'''[\s\S]*?'''|"""[\s\S]*?"""/g, '');
-        case 'html':
-        case 'xml':
-            return content.replace(/<!--[\s\S]*?-->/g, '');
-        default:
-            return content;
+    const languageId = vscode.window.activeTextEditor?.document.languageId || '';
+    
+    const commentPatterns: { [key: string]: RegExp } = {
+        'javascript': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'typescript': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'python': /#.*|'''[\s\S]*?'''|"""[\s\S]*?"""/g,
+        'java': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'c': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'cpp': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'csharp': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'ruby': /#.*|=begin[\s\S]*?=end/g,
+        'php': /\/\/.*|#.*|\/\*[\s\S]*?\*\//g,
+        'swift': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'go': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'rust': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'html': /<!--[\s\S]*?-->/g,
+        'xml': /<!--[\s\S]*?-->/g,
+        'css': /\/\*[\s\S]*?\*\//g,
+        'scss': /\/\/.*|\/\*[\s\S]*?\*\//g,
+        'less': /\/\/.*|\/\*[\s\S]*?\*\//g,
+    };
+
+    // If we don't have a specific pattern for this language, return the original content
+    if (!commentPatterns[languageId]) {
+        return content;
     }
+
+    // Remove comments based on the language-specific pattern
+    return content.replace(commentPatterns[languageId], '');
 }
 
 

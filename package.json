@@ -24,6 +24,7 @@
         "copytabs.includeFileTypes": {
           "type": "array",
           "default": [],
+          "order": 50,
           "items": {
             "type": "string"
           },
@@ -32,6 +33,7 @@
         "copytabs.excludeFileTypes": {
           "type": "array",
           "default": [],
+          "order": 51,
           "items": {
             "type": "string"
           },
@@ -40,42 +42,50 @@
         "copytabs.separatorLine": {
           "type": "string",
           "default": "------------------------",
+          "order": 52,
           "description": "The separator line to use between files."
         },
         "copytabs.includeComments": {
           "type": "boolean",
           "default": true,
+          "order": 53,
           "description": "Whether to include comments in the copied content."
         },
         "copytabs.includeLineNumbers": {
           "type": "boolean",
           "default": false,
+          "order": 54,
           "description": "Include line numbers in the copied content"
         },
         "copytabs.includeFileTree": {
           "type": "boolean",
           "default": true,
+          "order": 55,
           "description": "Include a structured file tree at the top of the copied content"
         },
         "copytabs.structuredTreePosition": {
           "type": "string",
           "enum": ["start", "end"],
           "default": "start",
+          "order": 56,
           "description": "Position to include the structured file tree (start or end of the document)"
         },
         "copytabs.showCopyAllButton": {
           "type": "boolean",
           "default": true,
+          "order": 57,
           "description": "Show the 'Copy All' button in the status bar"
         },
         "copytabs.showCopySelectedButton": {
           "type": "boolean",
           "default": true,
+          "order": 58,
           "description": "Show the 'Copy Selected' button in the status bar"
         },
         "copytabs.showCopyCustomButton": {
           "type": "boolean",
           "default": true,
+          "order": 59,
           "description": "Show the 'Copy Custom' button in the status bar"
         }
       }
