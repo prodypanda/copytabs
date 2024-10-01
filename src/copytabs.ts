@@ -4,6 +4,7 @@ import * as path from 'path';
 let statusBarItem: vscode.StatusBarItem | undefined;
 let statusBarItemSelected: vscode.StatusBarItem | undefined;
 let statusBarItemCustom: vscode.StatusBarItem | undefined;
+let clipboardModeStatusBarItem: vscode.StatusBarItem | undefined;
 export function activate(context: vscode.ExtensionContext) {
     console.log('copytabs: Activating extension');
 
@@ -21,15 +22,22 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('copytabs.copyAllTabs', copyAllTabs),
         vscode.commands.registerCommand('copytabs.copySelectedTabs', copySelectedTabs),
-        vscode.commands.registerCommand('copytabs.copyTabsCustomFormat', copyTabsCustomFormat)
+        vscode.commands.registerCommand('copytabs.copyTabsCustomFormat', copyTabsCustomFormat),
+        vscode.commands.registerCommand('copytabs.toggleClipboardMode', toggleClipboardMode)
     );
 
     console.log('copytabs: Extension activated');
 }
 
 
+
 function createStatusBarItems() {
     const config = vscode.workspace.getConfiguration('copytabs');
+
+    clipboardModeStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 101);
+    updateClipboardModeStatusBar();
+    clipboardModeStatusBarItem.command = 'copytabs.toggleClipboardMode';
+    clipboardModeStatusBarItem.show();
 
     if (config.get<boolean>('showCopyAllButton')) {
         statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
@@ -56,6 +64,46 @@ function createStatusBarItems() {
     }
 }
 
+
+function updateClipboardModeStatusBar() {
+    const config = vscode.workspace.getConfiguration('copytabs');
+    const isClipboardMode = config.get<boolean>('copyToClipboard', false);
+    
+    if (clipboardModeStatusBarItem) {
+        clipboardModeStatusBarItem.text = isClipboardMode ? 
+            "$(clippy) Clipboard Mode" : 
+            "$(window) Tab Mode";
+        clipboardModeStatusBarItem.tooltip = isClipboardMode ?
+            "Click to switch to Tab Mode" :
+            "Click to switch to Clipboard Mode";
+    }
+}
+
+async function toggleClipboardMode() {
+    const config = vscode.workspace.getConfiguration('copytabs');
+    const currentMode = config.get<boolean>('copyToClipboard', false);
+    
+    await config.update('copyToClipboard', !currentMode, vscode.ConfigurationTarget.Global);
+    updateClipboardModeStatusBar();
+    
+    vscode.window.showInformationMessage(
+        `Switched to ${!currentMode ? 'Clipboard' : 'Tab'} Mode`
+    );
+}
+
+async function handleContent(content: string) {
+    const config = vscode.workspace.getConfiguration('copytabs');
+    const copyToClipboard = config.get<boolean>('copyToClipboard', false);
+
+    if (copyToClipboard) {
+        await vscode.env.clipboard.writeText(content);
+        vscode.window.showInformationMessage('Content copied to clipboard!');
+    } else {
+        const newDoc = await vscode.workspace.openTextDocument({ content, language: 'plaintext' });
+        await vscode.window.showTextDocument(newDoc, { preview: false });
+        vscode.window.showInformationMessage('Content copied to new tab!');
+    }
+}
 
 function updateStatusBarItems() {
     const config = vscode.workspace.getConfiguration('copytabs');
@@ -144,14 +192,14 @@ async function copyAllTabs() {
         }
     }
 
+    
+
+
     if (combinedContent) {
-        const newDoc = await vscode.workspace.openTextDocument({ content: combinedContent, language: 'plaintext' });
-        await vscode.window.showTextDocument(newDoc, { preview: false });
-        vscode.window.showInformationMessage('All tabs copied successfully with file tree!');
+        await handleContent(combinedContent);
     } else {
         vscode.window.showInformationMessage('No matching tabs found to copy.');
     }
-
 
 }
 
@@ -175,9 +223,7 @@ async function copySelectedTabs() {
         }));
 
         const combinedContent = content.filter(Boolean).join('\n\n------------------------\n\n');
-        const newDoc = await vscode.workspace.openTextDocument({ content: combinedContent, language: 'plaintext' });
-        await vscode.window.showTextDocument(newDoc, { preview: false });
-        vscode.window.showInformationMessage('Selected tabs copied successfully!');
+        await handleContent(combinedContent);
     }
 }
 
@@ -226,9 +272,8 @@ async function copyTabsCustomFormat() {
             }
         }
 
-        const newDoc = await vscode.workspace.openTextDocument({ content: combinedContent, language: 'plaintext' });
-        await vscode.window.showTextDocument(newDoc, { preview: false });
-        vscode.window.showInformationMessage('Tabs copied with custom format successfully!');
+
+        await handleContent(combinedContent);
     }
 }
 

@@ -3,7 +3,7 @@
   "displayName": "copytabs for VSCode",
   "description": "This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab, including their file locations. Perfect for sharing code context with AI assistants, code reviews, documentation, debugging, and teaching. Easily compile and share your entire project or selected files with configurable options for a seamless workflow.",
   "publisher": "Prodypanda",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "bugs": {
     "url": "https://github.com/prodypanda/copytabs/issues"
   },
@@ -87,6 +87,12 @@
           "default": true,
           "order": 59,
           "description": "Show the 'Copy Custom' button in the status bar"
+        },
+        "copytabs.copyToClipboard": {
+          "type": "boolean",
+          "default": false,
+          "order": 60,
+          "description": "Copy tabs content directly to clipboard instead of opening in a new tab"
         }
       }
     },
@@ -102,6 +108,10 @@
       {
         "command": "copytabs.copyTabsCustomFormat",
         "title": "Copy Tabs with Custom Format"
+      },
+      {
+        "command": "copytabs.toggleClipboardMode",
+        "title": "Toggle Clipboard Mode"
       }
     ],
     "keybindings": [
@@ -119,6 +129,11 @@
         "command": "copytabs.copyTabsCustomFormat",
         "key": "ctrl+shift+f",
         "mac": "cmd+shift+f"
+      },
+      {
+        "command": "copytabs.toggleClipboardMode",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t"
       }
     ]
   },

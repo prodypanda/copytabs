@@ -1,6 +1,6 @@
 # 📋 Copy All Tabs to New Tab - VS Code Extension
 
-This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab, including their file locations. It's a powerful tool for various use cases, especially when working with AI code assistants or needing to share your codebase context.
+This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab or directly to your clipboard, including their file locations. It's a powerful tool for various use cases, especially when working with AI code assistants or needing to share your codebase context.
 
 Effortlessly compile and share your entire project context with this powerful VS Code extension. Perfect for AI-assisted coding, code reviews, documentation, and teaching.
 
@@ -8,8 +8,8 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 
 ## 🚀 Key Features
 
-- Copies the content of all opened tabs into a single new tab
-- Selectively copy chosen tabs
+- Copy tabs content to a new tab or directly to clipboard
+- Copy all opened tabs or selectively copy chosen tabs
 - Custom formatting option for copied content
 - Includes a structured file tree for better context
 - Includes the file location at the top of each file's content
@@ -46,23 +46,28 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 
 ## 🖱️ Usage
 
-There are three main features, each accessible via the status bar, command palette, or keyboard shortcut:
+There are four main features, each accessible via the status bar, command palette, or keyboard shortcut:
 
-### 1. Copy All Tabs:
+### 1. Toggle Clipboard Mode:
+- Status Bar: Click the "$(clippy) Clipboard Mode" or "$(window) Tab Mode" item to toggle
+- Command Palette: "Toggle Clipboard Mode"
+- Keyboard Shortcut: `Ctrl+Shift+T` (Windows/Linux) or `Cmd+Shift+T` (macOS)
+
+### 2. Copy All Tabs:
 - Status Bar: Click on the "$(files) Copy All" item
 - Command Palette: "Copy All Tabs to New Tab"
 - Keyboard Shortcut: `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (macOS)
 
 ![Copy All Tabs Demo](src/assets/copyallbtn.gif)
 
-### 2. Copy Selected Tabs:
+### 3. Copy Selected Tabs:
 - Status Bar: Click on the "$(list-selection) Copy Selected" item
 - Command Palette: "Copy Selected Tabs to New Tab"
 - Keyboard Shortcut: `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)
 
 ![Copy Selected Tabs Demo](src/assets/copyselected.gif)
 
-### 3. Copy Tabs with Custom Format:
+### 4. Copy Tabs with Custom Format:
 - Status Bar: Click on the "$(settings-gear) Copy Custom" item
 - Command Palette: "Copy Tabs with Custom Format"
 - Keyboard Shortcut: `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)
@@ -88,8 +93,8 @@ When enabled, a structured file tree is included at the top (or bottom) of the c
 ## 🤖 Example Workflow with AI Code Assistant
 
 1. Open all relevant files in your VS Code project.
-2. Use the extension to copy all tabs (or selected tabs) to a new tab.
-3. Copy the entire content of the new tab, including the structured file tree.
+2. Enable Clipboard Mode if you want to paste directly into the AI assistant.
+3. Use the extension to copy all tabs (or selected tabs).
 4. Open your preferred AI code assistant (e.g., ChatGPT).
 5. Paste the copied content and ask for code review, optimization suggestions, or any other coding assistance.
 
@@ -99,6 +104,7 @@ This workflow allows you to quickly provide full context to the AI assistant, le
 
 This extension contributes the following settings:
 
+- `copytabs.copyToClipboard`: Copy tabs content directly to clipboard instead of opening in a new tab (default: false).
 - `copytabs.includeFileTypes`: File types to include in the copy process. Leave empty to include all files.
 - `copytabs.excludeFileTypes`: File types to exclude from the copy process.
 - `copytabs.separatorLine`: The separator line to use between files.
@@ -110,13 +116,16 @@ This extension contributes the following settings:
 - `copytabs.showCopySelectedButton`: Show the 'Copy Selected' button in the status bar.
 - `copytabs.showCopyCustomButton`: Show the 'Copy Custom' button in the status bar.
 
-You can modify these settings in your VS Code settings.json file. For example, to hide the "Copy Custom" button, you would add the following to your settings:
+You can modify these settings in your VS Code settings.json file. For example:
 
 ```json
-"copytabs.showCopyCustomButton": false
+{
+    "copytabs.copyToClipboard": true,
+    "copytabs.showCopyCustomButton": false
+}
 ```
 
-This allows you to customize which buttons appear in your status bar, optimizing your workspace according to your needs and preferences.
+This allows you to customize which buttons appear in your status bar and how the extension behaves, optimizing your workspace according to your needs and preferences.
 
 ## 📋 Requirements
 
@@ -127,6 +136,15 @@ This extension requires Visual Studio Code version 1.91.0 or higher.
 There are no known issues at this time. If you encounter any problems, please file an issue on the GitHub repository.
 
 ## 📝 Release Notes
+
+## [0.2.0] - 2024-10-01
+
+### Added
+- New Clipboard Mode feature:
+  - Toggle between copying to clipboard or new tab
+  - New status bar item to show and toggle the current mode
+  - New configuration option: `copytabs.copyToClipboard`
+  - New command and keyboard shortcut to toggle modes
 
 ## [0.1.2] - 2024-08-07
 
