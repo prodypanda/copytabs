@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 function createStatusBarItems() {
     const config = vscode.workspace.getConfiguration('copytabs');
 
-    clipboardModeStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 101);
+    clipboardModeStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 97);
     updateClipboardModeStatusBar();
     clipboardModeStatusBarItem.command = 'copytabs.toggleClipboardMode';
     clipboardModeStatusBarItem.show();
