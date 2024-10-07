@@ -17,7 +17,7 @@ First off, thank you for considering contributing to the Copy All Tabs Extension
 
 ## Code of Conduct
 
-This project and everyone participating in it are governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [conduct@example.com].
+This project and everyone participating in it are governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [copytabsconduct@prodypanda.com].
 
 ## Getting Started
 
@@ -189,14 +189,14 @@ Contributors who make significant improvements will be recognized in:
 ## Additional Notes
 
 - If you have any questions, feel free to ask
-- Join our [Discord community](https://discord.gg/example) for discussions
+- Join our [Discord community](https://discord.gg/copytabs) for discussions
 - Check out our [roadmap](https://github.com/prodypanda/copytabs/projects/1) for planned features
 
 ## Need Help?
 
 Feel free to reach out to the maintainers:
 - GitHub: Open an issue
-- Email: [contributors@example.com]
-- Twitter: [@CopyAllTabs](https://twitter.com/example)
+- Email: [copytabscontributors@prodypanda.com]
+- Twitter: [@CopyAllTabs](https://twitter.com/copytabs)
 
 Thank you for contributing to Copy All Tabs Extension!
