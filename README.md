@@ -189,6 +189,10 @@ If you find this extension helpful, consider:
 - Star the repository on GitHub
 - Leave a review on the VS Code Marketplace
 - Report any issues or suggest features on the GitHub repository
+<a href="https://www.buymeacoffee.com/ProdyPanda" target="_blank">
+        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" style="height: 41px; width: 174px;">
+    </a>
+
 
 💡 Try it now and supercharge your coding experience!
 
