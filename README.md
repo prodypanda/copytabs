@@ -137,6 +137,16 @@ There are no known issues at this time. If you encounter any problems, please fi
 
 ## 📝 Release Notes
 
+### [0.3.0] - 2024-03-02
+
+Major update focusing on stability and user experience:
+- Improved error handling and recovery
+- Better progress reporting
+- More efficient file processing
+- Enhanced clipboard mode
+- Better handling of large files
+- Improved status bar management
+
 ## [0.2.0] - 2024-10-01
 
 ### Added
@@ -197,3 +207,4 @@ If you find this extension helpful, consider:
 💡 Try it now and supercharge your coding experience!
 
 Thank you for using Copy All Tabs to New Tab!
+````

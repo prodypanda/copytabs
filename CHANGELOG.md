@@ -5,6 +5,36 @@ All notable changes to the "copytabs" extension will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2024-03-19
+
+### Added
+- Major refactoring for better code organization and stability:
+  - New ConfigManager for centralized settings management
+  - New StatusBarManager for improved UI handling
+  - Better error handling and recovery
+- Improved file size handling with readable size formatting
+- Better progress reporting during file processing
+- Enhanced error messages with more details
+
+### Changed
+- Improved clipboard mode handling
+- Better type safety throughout the codebase
+- More efficient tab processing with chunking
+- Updated documentation with new features
+
+## [0.2.0] - 2024-03-19
+
+### Added
+- add **clipboard mode** for direct copying:
+  - Add option to copy tabs content directly to clipboard
+  - Add status bar toggle between clipboard and tab modes
+  - Add new keyboard shortcut (Ctrl/Cmd+Shift+T) for mode switching
+  - Add copyToClipboard configuration option
+  - Update documentation to reflect new feature
+This feature streamlines the workflow by allowing users to copy
+tab content directly to clipboard without creating a new tab.
+
+
 ## [0.1.2] - 2024-08-07
 
 ### Added
@@ -67,59 +97,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Feature: Include file locations at the top of each file's content
 - Feature: Status bar item for quick access
 
-[0.1.1]: https://github.com/prodypanda/copytabs/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/prodypanda/copytabs/compare/v0.0.3-alpha...v0.1.0
-[0.0.3-alpha]: https://github.com/prodypanda/copytabs/compare/v0.0.2-alpha...v0.0.3-alpha
-[0.0.2-alpha]: https://github.com/prodypanda/copytabs/compare/v0.0.1-alpha...v0.0.2-alpha
-[0.0.1-alpha]: https://github.com/prodypanda/copytabs/releases/tag/v0.0.1-alpha
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Changelog
-
-All notable changes to the "copytabs" extension will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [0.1.2] - 2024-08-08
-
-### Added
-- New configuration options to control the visibility of status bar buttons:
-  - `copytabs.showCopyAllButton`
-  - `copytabs.showCopySelectedButton`
-  - `copytabs.showCopyCustomButton`
-- Dynamic update of status bar items when configuration changes
-
-### Changed
-- Updated README with information about new configuration options
-- Improved code structure to support customizable status bar items
-
-## [0.1.1] - 2024-08-07
-
-### Added
-- Demonstration videos in the README for better feature visualization
-
-### Fixed
-- Various bug fixes and performance improvements
-
-## [0.1.0] - 2024-08-06
-
-[... previous changelog entries ...]
-
+[0.3.0]: https://github.com/prodypanda/copytabs/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/prodypanda/copytabs/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/prodypanda/copytabs/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/prodypanda/copytabs/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/prodypanda/copytabs/compare/v0.0.3-alpha...v0.1.0
