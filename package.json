@@ -1,9 +1,9 @@
 {
   "name": "copytabs",
-  "displayName": "copytabs for VSCode",
-  "description": "This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab, including their file locations. Perfect for sharing code context with AI assistants, code reviews, documentation, debugging, and teaching. Easily compile and share your entire project or selected files with configurable options for a seamless workflow.",
+  "displayName": "%copytabs.displayName%",
+  "description": "%copytabs.description%",
   "publisher": "Prodypanda",
-  "version": "0.3.0",
+  "version": "1.0.45",
   "bugs": {
     "url": "https://github.com/prodypanda/copytabs/issues"
   },
@@ -14,12 +14,14 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": ["onStartupFinished"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/copytabs.js",
-  "icon": "icon.png",  
+  "icon": "icon.png",
   "contributes": {
     "configuration": {
-      "title": "Copy All Tabs",
+      "title": "%copytabs.configuration.title%",
       "properties": {
         "copytabs.includeFileTypes": {
           "type": "array",
@@ -28,7 +30,7 @@
           "items": {
             "type": "string"
           },
-          "description": "File types to include in the copy process. Leave empty to include all files."
+          "description": "%copytabs.includeFileTypes.Description%"
         },
         "copytabs.excludeFileTypes": {
           "type": "array",
@@ -37,81 +39,92 @@
           "items": {
             "type": "string"
           },
-          "description": "File types to exclude from the copy process."
+          "description": "%copytabs.excludeFileTypes.Description%"
         },
         "copytabs.separatorLine": {
           "type": "string",
           "default": "------------------------",
           "order": 52,
-          "description": "The separator line to use between files."
+          "description": "%copytabs.separatorLine.Description%"
         },
         "copytabs.includeComments": {
           "type": "boolean",
           "default": true,
           "order": 53,
-          "description": "Whether to include comments in the copied content."
+          "description": "%copytabs.includeComments.Description%"
         },
         "copytabs.includeLineNumbers": {
           "type": "boolean",
           "default": false,
           "order": 54,
-          "description": "Include line numbers in the copied content"
+          "description": "%copytabs.includeLineNumbers.Description%"
         },
         "copytabs.includeFileTree": {
           "type": "boolean",
           "default": true,
           "order": 55,
-          "description": "Include a structured file tree at the top of the copied content"
+          "description": "%copytabs.includeFileTree.Description%"
         },
         "copytabs.structuredTreePosition": {
           "type": "string",
-          "enum": ["start", "end"],
+          "enum": [
+            "start",
+            "end"
+          ],
           "default": "start",
           "order": 56,
-          "description": "Position to include the structured file tree (start or end of the document)"
+          "description": "%copytabs.structuredTreePosition.Description%"
         },
         "copytabs.showCopyAllButton": {
           "type": "boolean",
           "default": true,
           "order": 57,
-          "description": "Show the 'Copy All' button in the status bar"
+          "description": "%copytabs.showCopyAllButton.Description%"
         },
         "copytabs.showCopySelectedButton": {
           "type": "boolean",
           "default": true,
           "order": 58,
-          "description": "Show the 'Copy Selected' button in the status bar"
+          "description": "%copytabs.showCopySelectedButton.Description%"
         },
         "copytabs.showCopyCustomButton": {
           "type": "boolean",
           "default": true,
           "order": 59,
-          "description": "Show the 'Copy Custom' button in the status bar"
+          "description": "%copytabs.showCopyCustomButton.Description%"
         },
         "copytabs.copyToClipboard": {
           "type": "boolean",
           "default": false,
           "order": 60,
-          "description": "Copy tabs content directly to clipboard instead of opening in a new tab"
+          "description": "%copytabs.copyToClipboard.Description%"
         }
       }
     },
     "commands": [
       {
         "command": "copytabs.copyAllTabs",
-        "title": "Copy All Tabs to New Tab"
+        "title": "%copytabs.command.copyAllTabs%"
       },
       {
         "command": "copytabs.copySelectedTabs",
-        "title": "Copy Selected Tabs to New Tab"
+        "title": "%copytabs.command.copySelectedTabs%"
       },
       {
         "command": "copytabs.copyTabsCustomFormat",
-        "title": "Copy Tabs with Custom Format"
+        "title": "%copytabs.command.copyTabsCustomFormat%"
       },
       {
         "command": "copytabs.toggleClipboardMode",
-        "title": "Toggle Clipboard Mode"
+        "title": "%copytabs.command.toggleClipboardMode%"
+      },
+      {
+        "command": "copytabs.showHistory",
+        "title": "%copytabs.command.showHistory%"
+      },
+      {
+        "command": "copytabs.clearHistory",
+        "title": "%copytabs.command.clearHistory%"
       }
     ],
     "keybindings": [
@@ -134,8 +147,31 @@
         "command": "copytabs.toggleClipboardMode",
         "key": "ctrl+shift+t",
         "mac": "cmd+shift+t"
+      },
+      {
+        "command": "copytabs.showHistory",
+        "key": "ctrl+shift+h",
+        "mac": "cmd+shift+h"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "copytabs-history",
+          "title": "%history.view.title%",
+          "icon": "$(debug-restart-frame)"
+        }
+      ]
+    },
+    "views": {
+      "copytabs-history": [
+        {
+          "type": "webview",
+          "id": "copytabs.historyView",
+          "name": "%history.view.title%"
+        }
+      ]
+    }
   },
   "repository": {
     "type": "git",
@@ -143,22 +179,29 @@
   },
   "license": "MIT",
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run validate-l10n && npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "validate-l10n": "ts-node src/scripts/validateL10n.ts"
+  },
+  "dependencies": {
+    "@vscode/l10n": "^0.0.18"
   },
   "devDependencies": {
-    "@types/vscode": "^1.91.0",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
+    "@types/vscode": "^1.91.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/l10n-dev": "^0.0.35",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
     "eslint": "^8.57.0",
     "typescript": "^5.4.5",
-    "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.4.0"
-  }
+    "ts-node": "^10.9.1"
+  },
+  "l10n": "./l10n"
 }

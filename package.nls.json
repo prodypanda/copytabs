@@ -1,0 +1,43 @@
+{
+    "history.view.title": "Copy History",
+    "history.clear": "Clear History",
+    "history.empty": "No history items",
+    "history.item.copy": "Copy",
+    "history.item.delete": "Delete",
+    "history.item.view": "View",
+    "mode.clipboard": "Clipboard Mode",
+    "mode.tab": "Tab Mode",
+    "action.copyAll": "Copy All",
+    "action.copySelected": "Copy Selected",
+    "action.copyCustom": "Copy Custom",
+    "action.settings": "Settings",
+    "history.timestamp": "Copied on",
+
+
+
+    "copytabs.command.copyAllTabs": "Copy All Tabs to New Tab",
+    "copytabs.command.copySelectedTabs": "Copy Selected Tabs to New Tab",
+    "copytabs.command.copyTabsCustomFormat": "Copy Tabs with Custom Format",
+    "copytabs.command.toggleClipboardMode": "Toggle Clipboard Mode",
+    "copytabs.command.showHistory": "Show Copy History",
+    "copytabs.command.clearHistory": "Clear Copy History",
+
+
+    "copytabs.displayName": "copytabs for VSCode",
+    "copytabs.description": "This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab, including their file locations. Perfect for sharing code context with AI assistants, code reviews, documentation, debugging, and teaching. Easily compile and share your entire project or selected files with configurable options for a seamless workflow.",
+
+    "copytabs.configuration.title": "Copy All Tabs.",
+    "copytabs.includeFileTypes.Description": "File types to include in the copy process. Leave empty to include all files.",
+    "copytabs.excludeFileTypes.Description": "File types to exclude from the copy process.",
+    "copytabs.separatorLine.Description": "Separator line to use between copied items.",
+    "copytabs.includeComments.Description": "Whether to include comments in the copied content.",
+    "copytabs.includeLineNumbers.Description": "Include line numbers in the copied content.",
+
+    "copytabs.includeFileTree.Description": "Include a structured file tree at the top of the copied content.",
+    "copytabs.structuredTreePosition.Description": "Position to include the structured file tree (start or end of the document).",
+    "copytabs.showCopyAllButton.Description": "Show the 'Copy All' button in the status bar.",
+    "copytabs.showCopySelectedButton.Description": "Show the 'Copy Selected' button in the status bar.",
+    "copytabs.showCopyCustomButton.Description": "Show the 'Copy Custom' button in the status bar.",
+    "copytabs.copyToClipboard.Description": "Copy tabs content directly to clipboard instead of opening in a new tab."
+    
+}

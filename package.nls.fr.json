@@ -1,0 +1,43 @@
+{
+    "history.view.title": "Historique des copies",
+    "history.clear": "Effacer l'historique",
+    "history.empty": "Aucun élément dans l'historique",
+    "history.item.copy": "Copier",
+    "history.item.delete": "Supprimer",
+    "history.item.view": "Voir",
+    "mode.clipboard": "Mode Presse-papiers",
+    "mode.tab": "Mode Onglet",
+    "action.copyAll": "Tout copier",
+    "action.copySelected": "Copier la sélection",
+    "action.copyCustom": "Copie personnalisée",
+    "action.settings": "Paramètres",
+    "history.timestamp": "Copié le",
+
+
+
+    "copytabs.command.copyAllTabs": "Copier tous les onglets dans un nouvel onglet",
+    "copytabs.command.copySelectedTabs": "Copier les onglets sélectionnés dans un nouvel onglet",
+    "copytabs.command.copyTabsCustomFormat": "Copier les onglets avec un format personnalisé",
+    "copytabs.command.toggleClipboardMode": "Basculer le mode Presse-papiers",
+    "copytabs.command.showHistory": "Afficher l'historique de copie",
+    "copytabs.command.clearHistory": "Effacer l'historique de copie",
+
+
+    "copytabs.displayName": "copytabs for VSCode (copytabs pour VSCode)",
+    "copytabs.description": "Cette extension Visual Studio Code vous permet de copier le contenu de tous les onglets ouverts dans un nouvel onglet, y compris leurs emplacements de fichiers. Parfaite pour partager le contexte du code avec des assistants IA, des revues de code, de la documentation, du débogage et de l’enseignement. Compilez et partagez facilement votre projet entier ou des fichiers sélectionnés avec des options configurables pour un flux de travail fluide.",
+
+    "copytabs.configuration.title": "Copier tous les onglets",
+    "copytabs.includeFileTypes.Description": "Types de fichiers à inclure dans le processus de copie. Laissez vide pour inclure tous les fichiers.",
+    "copytabs.excludeFileTypes.Description": "Types de fichiers à exclure du processus de copie.",
+    "copytabs.separatorLine.Description": "Ligne de séparation à utiliser entre les éléments copiés.",
+    "copytabs.includeComments.Description": "Indique si les commentaires doivent être inclus dans le contenu copié.",
+    "copytabs.includeLineNumbers.Description": "Inclure les numéros de ligne dans le contenu copié.",
+
+    "copytabs.includeFileTree.Description": "Inclure une arborescence de fichiers structurée en haut du contenu copié.",
+    "copytabs.structuredTreePosition.Description": "Position pour inclure l’arborescence de fichiers structurée (début ou fin du document).",
+    "copytabs.showCopyAllButton.Description": "Afficher le bouton 'Tout copier' dans la barre d’état.",
+    "copytabs.showCopySelectedButton.Description": "Afficher le bouton 'Copier la sélection' dans la barre d’état.",
+    "copytabs.showCopyCustomButton.Description": "Afficher le bouton 'Copie personnalisée' dans la barre d’état.",
+    "copytabs.copyToClipboard.Description": "Copier le contenu des onglets directement dans le presse-papiers au lieu de l’ouvrir dans un nouvel onglet."
+
+}
