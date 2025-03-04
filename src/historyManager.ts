@@ -37,7 +37,7 @@ export class HistoryManager {
         if (item) {
             if (ConfigManager.isClipboardMode()) {
                 await vscode.env.clipboard.writeText(item.content);
-                vscode.window.showInformationMessage(vscode.l10n.t("information.copiedToClipboard"));
+                vscode.window.showInformationMessage(vscode.l10n.t("Content copied to clipboard!"));
             } else {
                 const doc = await vscode.workspace.openTextDocument({ content: item.content });
                 await vscode.window.showTextDocument(doc);
@@ -55,7 +55,7 @@ export class HistoryManager {
         this.history = [];
         await this.saveHistory();
         this._onHistoryChanged.fire();
-        vscode.window.showInformationMessage(vscode.l10n.t('history.cleared'));
+        vscode.window.showInformationMessage(vscode.l10n.t("History cleared"));
     }
 
     public getHistory(): HistoryItem[] {
