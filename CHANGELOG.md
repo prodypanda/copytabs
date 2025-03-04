@@ -5,7 +5,31 @@ All notable changes to the "copytabs" extension will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.0] - 2024-03-19
+## [1.0.0] - 2024-03-05
+
+### Added
+- New History Panel feature:
+  - Dedicated activity bar view for copy history
+  - Preview copied content
+  - Re-copy previous items
+  - Delete individual history items
+  - Clear entire history
+  - Beautiful, responsive UI
+  - History limit indicator
+  - Timestamps for all copies
+- Full localization support:
+  - Added French (fr) translation
+  - Added German (de) translation
+  - Localized all UI elements
+- New keyboard shortcut:
+  - `Ctrl/Cmd+Shift+H` to open history panel
+
+### Changed
+- Enhanced UI with improved styling and animations
+- Better error handling with localized error messages
+- Updated documentation to reflect new features
+
+## [0.3.0] - 2024-03-02
 
 ### Added
 - Major refactoring for better code organization and stability:
@@ -97,6 +121,7 @@ tab content directly to clipboard without creating a new tab.
 - Feature: Include file locations at the top of each file's content
 - Feature: Status bar item for quick access
 
+[1.0.0]: https://github.com/prodypanda/copytabs/compare/v0.3.0...v1.0.0
 [0.3.0]: https://github.com/prodypanda/copytabs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/prodypanda/copytabs/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/prodypanda/copytabs/compare/v0.1.1...v0.1.2

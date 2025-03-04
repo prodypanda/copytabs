@@ -8,11 +8,12 @@
   "Clipboard Mode": "Clipboard Mode",
   "Tab Mode": "Tab Mode",
   "Settings": "Settings",
+  "Extension Settings": "Extension Settings",
   "Support this extension by buying me a coffee ☕": "Support this extension by buying me a coffee ☕",
   "History": "History",
   "Clear History": "Clear History",
   "Copied on": "Copied on",
-  "View": "View",
+  "Preview": "Preview",
   "Copy": "Copy",
   "Delete": "Delete",
   "History is empty": "History is empty",
@@ -33,5 +34,10 @@
   "Format must include both {filename} and {content}": "Format must include both {filename} and {content}",
   "Include structured file tree?": "Include structured file tree?",
   "Where to place the file tree?": "Where to place the file tree?",
-  "Copied tabs with custom format": "Copied tabs with custom format"
+  "Copied tabs with custom format": "Copied tabs with custom format",
+  "History limit reached!": "History limit reached!",
+  "New copies will remove the oldest entries.": "New copies will remove the oldest entries.",
+  "Latest": "Latest",
+  "Oldest": "Oldest",
+  "{0} selected tabs copied": "{0} copied selected tabs"
 }

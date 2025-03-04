@@ -19,6 +19,9 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 - Option to include or exclude comments
 - Customizable separator between files
 - Keyboard shortcuts for quick access
+- History panel for managing copied content
+- Full localization support (English, French, German)
+- Beautiful, responsive history interface
 
 ## 💡 Use Cases
 
@@ -73,6 +76,21 @@ There are four main features, each accessible via the status bar, command palett
 - Keyboard Shortcut: `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)
 
 ![Copy Custom with Tree Demo](src/assets/copycustomwithtree.gif)
+
+### 5. History Panel:
+- View Button: Click the history icon in the activity bar
+- Command Palette: "Show History Panel"
+- Keyboard Shortcut: `Ctrl+Shift+H` (Windows/Linux) or `Cmd+Shift+H` (macOS)
+
+The History Panel allows you to:
+- View your copy history
+- Preview copied content
+- Re-copy previous items
+- Delete individual items
+- Clear entire history
+- See timestamps for each copy
+- Track remaining history slots
+
 
 ### Using Commands:
 
@@ -136,6 +154,25 @@ This extension requires Visual Studio Code version 1.91.0 or higher.
 There are no known issues at this time. If you encounter any problems, please file an issue on the GitHub repository.
 
 ## 📝 Release Notes
+
+### [1.0.0] - 2024-03-05
+
+Major update focusing on History management & Localization:
+- New History Panel feature:
+  - Dedicated activity bar view for copy history
+  - Preview copied content
+  - Re-copy previous items
+  - Delete individual history items
+  - Clear entire history
+  - Beautiful, responsive UI
+  - History limit indicator
+  - Timestamps for all copies
+- Full localization support:
+  - Added French (fr) translation
+  - Added German (de) translation
+  - Localized all UI elements
+- New keyboard shortcut:
+  - `Ctrl/Cmd+Shift+H` to open history panel
 
 ### [0.3.0] - 2024-03-02
 
@@ -207,4 +244,3 @@ If you find this extension helpful, consider:
 💡 Try it now and supercharge your coding experience!
 
 Thank you for using Copy All Tabs to New Tab!
-````

@@ -3,7 +3,7 @@
   "displayName": "%copytabs.displayName%",
   "description": "%copytabs.description%",
   "publisher": "Prodypanda",
-  "version": "1.0.0",
+  "version": "1.0.",
   "bugs": {
     "url": "https://github.com/prodypanda/copytabs/issues"
   },

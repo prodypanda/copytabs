@@ -181,7 +181,7 @@ async function copySelectedTabs() {
         }));
 
         const combinedContent = content.filter(Boolean).join('\n\n------------------------\n\n');
-        await handleContent(combinedContent, `Copied ${selectedTabs.length} selected tabs`);
+        await handleContent(combinedContent, vscode.l10n.t('{0} selected tabs copied', selectedTabs.length));
     }
 }
 
