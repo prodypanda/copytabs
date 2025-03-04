@@ -1,9 +1,6 @@
 import * as vscode from 'vscode';
 import ConfigManager from './config';
 
-
-
-
 export class StatusBarManager {
     private items: Map<string, vscode.StatusBarItem>;
 
@@ -27,9 +24,9 @@ export class StatusBarManager {
 
     private createActionButtons() {
         const buttons = [
-            { id: 'copyAllTabs', text: '$(files) ' + vscode.l10n.t("action.copyAll"), tooltip: vscode.l10n.t("action.copyAllTooltip"), priority: 100 },
-            { id: 'copySelectedTabs', text: '$(list-selection) ' + vscode.l10n.t("action.copySelected"), tooltip: vscode.l10n.t("action.copySelectedTooltip"), priority: 99 },
-            { id: 'copyTabsCustomFormat', text: '$(settings-gear) ' + vscode.l10n.t("action.copyCustom"), tooltip: vscode.l10n.t("action.copyCustomTooltip"), priority: 98 }
+            { id: 'copyAllTabs', text: '$(files) ' + vscode.l10n.t("Copy All"), tooltip: vscode.l10n.t("Copy all opened tabs"), priority: 100 },
+            { id: 'copySelectedTabs', text: '$(list-selection) ' + vscode.l10n.t("Copy Selected"), tooltip: vscode.l10n.t("Copy selected tabs"), priority: 99 },
+            { id: 'copyTabsCustomFormat', text: '$(settings-gear) ' + vscode.l10n.t("Copy Custom"), tooltip: vscode.l10n.t("Copy tabs with custom format"), priority: 98 }
         ];
 
         buttons.forEach(({ id, text, tooltip, priority }) => {
@@ -51,7 +48,7 @@ export class StatusBarManager {
         const isClipboardMode = ConfigManager.isClipboardMode();
         const item = this.items.get('mode');
         if (item) {
-            item.text = isClipboardMode ? "$(clippy) " + vscode.l10n.t("mode.clipboard") : "$(window) " + vscode.l10n.t("mode.tab");
+            item.text = isClipboardMode ? "$(clippy) " + vscode.l10n.t("Clipboard Mode") : "$(window) " + vscode.l10n.t("Tab Mode");
             item.tooltip = `Click to switch to ${isClipboardMode ? 'Tab' : 'Clipboard'} Mode`;
         }
     }
