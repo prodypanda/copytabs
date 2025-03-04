@@ -300,37 +300,37 @@ export class HistoryViewProvider implements vscode.WebviewViewProvider {
                 <div class="toolbar">
                     <button class="mode-button icon-only" 
                             onclick="executeCommand('copytabs.toggleClipboardMode')"
-                            title="${isClipboardMode ? vscode.l10n.t('mode.clipboard') : vscode.l10n.t('mode.tab')}">
+                            title="${isClipboardMode ? vscode.l10n.t('Clipboard Mode') : vscode.l10n.t('Tab Mode')}">
                         <i class="codicon codicon-${isClipboardMode ? 'clippy' : 'window'}"></i>
                     </button>
                     <button class="icon-only" 
                             onclick="executeCommand('copytabs.copyAllTabs')"
-                            title="${vscode.l10n.t('action.copyAllTooltip')}">
+                            title="${vscode.l10n.t('Copy all opened tabs')}">
                         <i class="codicon codicon-files"></i>
                     </button>
                     <button class="icon-only" 
                             onclick="executeCommand('copytabs.copySelectedTabs')"
-                            title="${vscode.l10n.t('action.copySelectedTooltip')}">
+                            title="${vscode.l10n.t('Copy selected tabs')}">
                         <i class="codicon codicon-checklist"></i>
                     </button>
                     <button class="icon-only" 
                             onclick="executeCommand('copytabs.copyTabsCustomFormat')"
-                            title="${vscode.l10n.t('action.copyCustomTooltip')}">
+                            title="${vscode.l10n.t('Copy tabs with custom format')}">
                         <i class="codicon codicon-settings-gear"></i>
                     </button>
                     <button onclick="executeCommand('workbench.action.openSettings', '@ext:Prodypanda.copytabs')">
                         <i class="codicon codicon-tools"></i>
-                        ${vscode.l10n.t('action.settings')}
+                        ${vscode.l10n.t('Settings')}
                     </button>
                     <button class="support-button icon-only"
                             onclick="openExternal('https://www.buymeacoffee.com/prodypanda')"
-                            title="${vscode.l10n.t('action.support')}">
+                            title="${vscode.l10n.t('Support this extension by buying me a coffee ☕')}">
                         <i class="codicon codicon-heart"></i>
                     </button>
                 </div>
                 <div class="divider"></div>
                 <div class="history-header">
-                    <span>${vscode.l10n.t('history.label')}</span>
+                    <span>${vscode.l10n.t('History')}</span>
                     <div class="history-counter">
                         <i class="codicon codicon-history"></i>
                         ${history.length}/${HISTORY_LIMIT}
@@ -339,25 +339,25 @@ export class HistoryViewProvider implements vscode.WebviewViewProvider {
                 ${history.length > 0 ? `
                     <button class="clear-all" onclick="vscode.postMessage({ command: 'clearAll' })">
                         <i class="codicon codicon-trash"></i>
-                        ${vscode.l10n.t('history.clear')}
+                        ${vscode.l10n.t('Clear History')}
                     </button>
                     ${history.map((item, index) => `
                         <div class="history-item">
                             <div class="timestamp">
                                 <i class="codicon codicon-clock"></i>
-                                ${vscode.l10n.t('history.timestamp')}: ${new Date(item.timestamp).toLocaleString()}
+                                ${vscode.l10n.t('Copied on')}: ${new Date(item.timestamp).toLocaleString()}
                                 ${index === history.length - 1 ? '<span class="badge">Oldest</span>' : ''}
                                 ${index === 0 ? '<span class="badge latest">Latest</span>' : ''}
                             </div>
                             <div class="description">${item.description}</div>
                             <div class="actions">
-                                <button onclick="togglePreview(${index})" title="${vscode.l10n.t('history.item.view')}">
+                                <button onclick="togglePreview(${index})" title="${vscode.l10n.t('View')}">
                                     <i class="codicon codicon-eye"></i>
                                 </button>
-                                <button onclick="copyItem(${index})" title="${vscode.l10n.t('history.item.copy')}">
+                                <button onclick="copyItem(${index})" title="${vscode.l10n.t('Copy')}">
                                     <i class="codicon codicon-copy"></i>
                                 </button>
-                                <button class="delete-btn" onclick="deleteItem(${index})" title="${vscode.l10n.t('history.item.delete')}">
+                                <button class="delete-btn" onclick="deleteItem(${index})" title="${vscode.l10n.t('Delete')}">
                                     <i class="codicon codicon-trash"></i>
                                 </button>
                             </div>
@@ -366,7 +366,7 @@ export class HistoryViewProvider implements vscode.WebviewViewProvider {
                             </div>
                         </div>
                     `).join('')}
-                ` : `<div class="empty-state">${vscode.l10n.t('history.empty')}</div>`}
+                ` : `<div class="empty-state">${vscode.l10n.t('History is empty')}</div>`}
                 <script>
                     const vscode = acquireVsCodeApi();
 
