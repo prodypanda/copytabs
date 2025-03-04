@@ -1,7 +1,9 @@
+.vscode/
 out
 dist
 node_modules
 .vscode-test/
 *.vsix
 te.md
+package-lock.json
 ignore/
