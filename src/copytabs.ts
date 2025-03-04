@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { CopySettings, FileStructure } from './types';
 import { handleError, addPathToStructure, formatFileTree } from './utils';
 import { TabProcessor } from './tabProcessor';
@@ -7,9 +6,6 @@ import { StatusBarManager } from './statusBar';
 import ConfigManager from './config';
 import { HistoryViewProvider } from './historyView';
 import { HistoryManager } from './historyManager';
-
-// Remove the import for initializeLocalization
-// import { initializeLocalization } from './l10n'; // DELETED
 
 interface ProcessedTab {
     content: string;
@@ -20,8 +16,8 @@ let statusBarManager: StatusBarManager;
 let historyManager: HistoryManager;
 
 export async function activate(context: vscode.ExtensionContext) {
-    // Remove all calls to initializeLocalization
-    console.log(vscode.l10n.t('log.extension.starting'));
+    console.log(vscode.l10n.t('copytabs: Activating extension'));
+    vscode.window.showInformationMessage('Current VSC language:', vscode.env.language);
 
     try {
         historyManager = new HistoryManager(context);
@@ -51,10 +47,10 @@ export async function activate(context: vscode.ExtensionContext) {
             })
         );
 
-        console.log(vscode.l10n.t('log.extension.started'));
+        console.log(vscode.l10n.t('copytabs: Extension started'));
     } catch (error) {
-        console.error(vscode.l10n.t('log.extension.failed'), error);
-        vscode.window.showErrorMessage(vscode.l10n.t('log.extension.failed'));
+        console.error(vscode.l10n.t('copytabs: Failed to start extension'), error);
+        vscode.window.showErrorMessage(vscode.l10n.t('copytabs: Failed to start extension'));
     }
 }
 
@@ -62,21 +58,23 @@ export async function activate(context: vscode.ExtensionContext) {
 async function toggleClipboardMode() {
     await ConfigManager.toggleClipboardMode();
     statusBarManager.updateModeDisplay();
-    const mode = ConfigManager.isClipboardMode() ? vscode.l10n.t('mode.clipboard') : vscode.l10n.t('mode.tab');
-    const switchtotranslated = vscode.l10n.t('mode.switchedToTranslated');
+    const mode = ConfigManager.isClipboardMode()
+        ? vscode.l10n.t('Clipboard Mode')
+        : vscode.l10n.t('Tab Mode');
+    const switchtotranslated = vscode.l10n.t('Switched to ');
     vscode.window.showInformationMessage(`${switchtotranslated} ${mode}`);
 }
 
-async function handleContent(content: string, description: string = vscode.l10n.t('information.copied')) {
+async function handleContent(content: string, description: string = vscode.l10n.t('Copied content')) {
     const copyToClipboard = ConfigManager.isClipboardMode();
 
     if (copyToClipboard) {
         await vscode.env.clipboard.writeText(content);
-        vscode.window.showInformationMessage(vscode.l10n.t('information.copiedToClipboard'));
+        vscode.window.showInformationMessage(vscode.l10n.t('Content copied to clipboard!'));
     } else {
         const newDoc = await vscode.workspace.openTextDocument({ content, language: 'plaintext' });
         await vscode.window.showTextDocument(newDoc, { preview: false });
-        vscode.window.showInformationMessage(vscode.l10n.t('information.copiedToNewTab'));
+        vscode.window.showInformationMessage(vscode.l10n.t('Content copied to new tab!'));
     }
 
     historyManager.addToHistory(content, description);
@@ -98,14 +96,14 @@ async function copyAllTabs() {
 
         const openedTabs = vscode.window.tabGroups.all.flatMap(group => group.tabs);
         if (!openedTabs.length) {
-            vscode.window.showInformationMessage(vscode.l10n.t('information.noOpenTabOpened'));
+            vscode.window.showInformationMessage(vscode.l10n.t('No tabs are currently open.'));
             return;
         }
 
         let combinedContent = '';
         await vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
-            title: vscode.l10n.t('progress.copyingTabs'),
+            title: vscode.l10n.t('Copying tabs...'),
             cancellable: true
         }, async (progress, token) => {
             const chunks = await processTabsWithProgress(openedTabs, settings, progress, token);
@@ -124,9 +122,9 @@ async function copyAllTabs() {
         }
 
         if (combinedContent) {
-            await handleContent(combinedContent, openedTabs.length + vscode.l10n.t('history.copied.tabs'));
+            await handleContent(combinedContent, openedTabs.length + vscode.l10n.t(' Copied tabs'));
         } else {
-            vscode.window.showInformationMessage(vscode.l10n.t('information.noTabsToCopy'));
+            vscode.window.showInformationMessage(vscode.l10n.t('No matching tabs found to copy.'));
         }
     } catch (error) {
         handleError('Error in copyAllTabs', error);
@@ -165,10 +163,12 @@ async function copySelectedTabs() {
     const selectedTabs = await vscode.window.showQuickPick(
         vscode.window.tabGroups.all.flatMap(group => group.tabs).map(tab => ({
             label: tab.label,
-            description: (tab.input instanceof vscode.TabInputText) ? vscode.workspace.asRelativePath(tab.input.uri) : '',
+            description: (tab.input instanceof vscode.TabInputText)
+                ? vscode.workspace.asRelativePath(tab.input.uri)
+                : '',
             tab: tab
         })),
-        { canPickMany: true, placeHolder: vscode.l10n.t('information.selectTabsToCopy') }
+        { canPickMany: true, placeHolder: vscode.l10n.t('Select tabs to copy') }
     );
 
     if (selectedTabs && selectedTabs.length > 0) {
@@ -187,11 +187,11 @@ async function copySelectedTabs() {
 
 async function copyTabsCustomFormat() {
     const format = await vscode.window.showInputBox({
-        prompt: vscode.l10n.t('information.customFormatPrompt'),
+        prompt: vscode.l10n.t('Enter custom format (use {filename}, {content}, {separator}, and [NL] for new lines)'),
         value: '// {filename}[NL][NL]{content}[NL][NL]{separator}[NL][NL]',
         validateInput: (value: string) => {
             if (!value.includes('{filename}') || !value.includes('{content}')) {
-                return vscode.l10n.t('error.customFormatInvalid');
+                return vscode.l10n.t('Format must include both {filename} and {content}');
             }
             return null;
         }
@@ -199,13 +199,13 @@ async function copyTabsCustomFormat() {
 
     if (format) {
         const includeTree = await vscode.window.showQuickPick(['Yes', 'No'], {
-            placeHolder: vscode.l10n.t('information.includeFileTree')
+            placeHolder: vscode.l10n.t('Include structured file tree?')
         });
 
         let treePosition = 'start';
         if (includeTree === 'Yes') {
             treePosition = await vscode.window.showQuickPick(['Start', 'End'], {
-                placeHolder: vscode.l10n.t('information.treePosition')
+                placeHolder: vscode.l10n.t('Where to place the file tree?')
             }) || 'start';
         }
 
@@ -235,7 +235,7 @@ async function copyTabsCustomFormat() {
             }
         }
 
-        await handleContent(combinedContent, vscode.l10n.t('history.copied.customFormat'));
+        await handleContent(combinedContent, vscode.l10n.t('Copied tabs with custom format'));
     }
 }
 
