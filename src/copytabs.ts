@@ -17,7 +17,7 @@ let historyManager: HistoryManager;
 
 export async function activate(context: vscode.ExtensionContext) {
     console.log(vscode.l10n.t('copytabs: Activating extension'));
-    vscode.window.showInformationMessage('Current VSC language:', vscode.env.language);
+    // vscode.window.showInformationMessage('Current VSC language:', vscode.env.language);
 
     try {
         historyManager = new HistoryManager(context);
