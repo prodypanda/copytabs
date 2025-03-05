@@ -3,7 +3,7 @@
   "displayName": "%copytabs.displayName%",
   "description": "%copytabs.description%",
   "publisher": "Prodypanda",
-  "version": "1.0.",
+  "version": "1.0.1",
   "bugs": {
     "url": "https://github.com/prodypanda/copytabs/issues"
   },
@@ -207,7 +207,7 @@
     "validate-l10n": "ts-node src/scripts/validateL10n.ts"
   },
   "dependencies": {
-    "@vscode/l10n": "^0.0.18"
+    "@vscode/l10n": "^0.0.19"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
@@ -222,6 +222,19 @@
     "typescript": "^5.4.5",
     "ts-node": "^10.9.1"
   },
-  "l10n": "./l10n"
-  
+  "l10n": "./l10n",
+  "author": {
+    "name": "ProdyPanda",
+    "url": "https://github.com/prodypanda"
+  },
+  "keywords": [
+    "tabs",
+    "copy",
+    "clipboard",
+    "productivity",
+    "file tree",
+    "code sharing",
+    "ai assistant",
+    "code review"
+  ]
 }

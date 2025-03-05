@@ -52,33 +52,33 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 There are four main features, each accessible via the status bar, command palette, or keyboard shortcut:
 
 ### 1. Toggle Clipboard Mode:
-- Status Bar: Click the "$(clippy) Clipboard Mode" or "$(window) Tab Mode" item to toggle
+- Status Bar: Click the "🔄 Clipboard Mode" or "🪟 Tab Mode" item to toggle
 - Command Palette: "Toggle Clipboard Mode"
 - Keyboard Shortcut: `Ctrl+Shift+T` (Windows/Linux) or `Cmd+Shift+T` (macOS)
 
 ### 2. Copy All Tabs:
-- Status Bar: Click on the "$(files) Copy All" item
+- Status Bar: Click on the "📁 Copy All" item
 - Command Palette: "Copy All Tabs to New Tab"
 - Keyboard Shortcut: `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (macOS)
 
 ![Copy All Tabs Demo](src/assets/copyallbtn.gif)
 
 ### 3. Copy Selected Tabs:
-- Status Bar: Click on the "$(list-selection) Copy Selected" item
+- Status Bar: Click on the "✅ Copy Selected" item
 - Command Palette: "Copy Selected Tabs to New Tab"
 - Keyboard Shortcut: `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)
 
 ![Copy Selected Tabs Demo](src/assets/copyselected.gif)
 
 ### 4. Copy Tabs with Custom Format:
-- Status Bar: Click on the "$(settings-gear) Copy Custom" item
+- Status Bar: Click on the "⚙️ Copy Custom" item
 - Command Palette: "Copy Tabs with Custom Format"
 - Keyboard Shortcut: `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)
 
 ![Copy Custom with Tree Demo](src/assets/copycustomwithtree.gif)
 
 ### 5. History Panel:
-- View Button: Click the history icon in the activity bar
+- View Button: Click the 📜 history icon in the activity bar
 - Command Palette: "Show History Panel"
 - Keyboard Shortcut: `Ctrl+Shift+H` (Windows/Linux) or `Cmd+Shift+H` (macOS)
 
