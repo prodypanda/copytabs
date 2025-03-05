@@ -207,7 +207,7 @@
     "validate-l10n": "ts-node src/scripts/validateL10n.ts"
   },
   "dependencies": {
-    "@vscode/l10n": "^0.0.19"
+    "@vscode/l10n": "^0.0.18"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
