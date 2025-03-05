@@ -4,6 +4,28 @@
   "description": "%copytabs.description%",
   "publisher": "Prodypanda",
   "version": "1.0.1",
+  "badges": [
+    {
+      "url": "https://vsmarketplacebadges.dev/version-short/prodypanda.copytabs.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
+      "description": "Extension Version"
+    },
+    {
+      "url": "https://vsmarketplacebadges.dev/installs-short/prodypanda.copytabs.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
+      "description": "Extension Installs"
+    },
+    {
+      "url": "https://vsmarketplacebadges.dev/downloads-short/prodypanda.copytabs.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
+      "description": "Extension Downloads"
+    },
+    {
+      "url": "https://vsmarketplacebadges.dev/rating-short/prodypanda.copytabs.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
+      "description": "Extension Rating"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/prodypanda/copytabs/issues"
   },
@@ -236,5 +258,9 @@
     "code sharing",
     "ai assistant",
     "code review"
-  ]
+  ],
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  }
 }
