@@ -27,7 +27,8 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/prodypanda/copytabs/issues"
+    "url": "https://github.com/prodypanda/copytabs/issues",
+    "email": "admin@prodypanda.com"
   },
   "homepage": "https://github.com/prodypanda/copytabs#readme",
   
@@ -247,7 +248,8 @@
   "l10n": "./l10n",
   "author": {
     "name": "ProdyPanda",
-    "url": "https://github.com/prodypanda"
+    "url": "https://github.com/prodypanda",
+    "email": "admin@prodypanda.com"
   },
   "keywords": [
     "tabs",
