@@ -8,9 +8,28 @@
     "url": "https://github.com/prodypanda/copytabs/issues"
   },
   "homepage": "https://github.com/prodypanda/copytabs#readme",
+  
+  "pricing": "Trial",
+  
+  "sponsor": {
+    "url": "https://github.com/sponsors/prodypanda"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/prodypanda"
+    },
+    {
+      "type": "buymeacoffee",
+      "url": "https://www.buymeacoffee.com/prodypanda"
+    }
+  ]
+  
+  ,
   "engines": {
     "vscode": "^1.91.0"
   },
+  
   "categories": [
     "Other"
   ],
