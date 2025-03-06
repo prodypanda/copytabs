@@ -281,5 +281,7 @@
   "galleryBanner": {
     "color": "#C80000",
     "theme": "dark"
-  }
+  },
+  "qna":  "https://github.com/prodypanda/copytabs/discussions/categories/q-a"
+  
 }
