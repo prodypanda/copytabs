@@ -1,7 +1,13 @@
 # 📋 Copy All Tabs to New Tab - VS Code Extension
-<div align="center">![Visual Studio Marketplace Release Date](https://img.shields.io/visual-studio-marketplace/release-date/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)![Visual Studio Marketplace Last Updated](https://img.shields.io/visual-studio-marketplace/last-updated/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
-![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
-![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/stars/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)</div>
+
+
+![Visual Studio Marketplace Release Date](https://img.shields.io/visual-studio-marketplace/release-date/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
+![Visual Studio Marketplace Last Updated](https://img.shields.io/visual-studio-marketplace/last-updated/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
+![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
+![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
+
+
 
 This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab or directly to your clipboard, including their file locations. It's a powerful tool for various use cases, especially when working with AI code assistants or needing to share your codebase context.
 
