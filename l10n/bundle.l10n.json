@@ -36,8 +36,10 @@
   "Where to place the file tree?": "Where to place the file tree?",
   "Copied tabs with custom format": "Copied tabs with custom format",
   "History limit reached!": "History limit reached!",
-  "New copies will remove the oldest entries.": "New copies will remove the oldest entries.",
+  "New copies will remove the oldest entries.":"New copies will remove the oldest entries.",
   "Latest": "Latest",
   "Oldest": "Oldest",
-  "{0} selected tabs copied": "{0} copied selected tabs"
+  "{0} selected tabs copied": "{0} copied selected tabs",
+  "Pro Features Coming Soon": "Pro Features Coming Soon",
+  "Coming in the Next Release:": "Coming in the Next Release:"
 }

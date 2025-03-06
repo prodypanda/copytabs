@@ -10,35 +10,51 @@ export class StatusBarManager {
     }
 
     private createItems() {
+        if (ConfigManager.getConfig('hideStatusBarButtons', false)) {
+            this.hideAllButtons();
+            return;
+        }
         this.createModeToggle();
         this.createActionButtons();
     }
 
+    private hideAllButtons() {
+        this.items.forEach(item => {
+            item.hide();
+            item.dispose();
+        });
+        this.items.clear();
+    }
+
     private createModeToggle() {
-        const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 97);
-        item.command = 'copytabs.toggleClipboardMode';
-        this.items.set('mode', item);
-        this.updateModeDisplay();
-        item.show();
+        const showClipboardMode = vscode.workspace.getConfiguration('copytabs').get('showClipboardModeButton', true);
+        
+        if (showClipboardMode) {
+            const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 97);
+            item.command = 'copytabs.toggleClipboardMode';
+            this.items.set('mode', item);
+            this.updateModeDisplay();
+            item.show();
+        }
     }
 
     private createActionButtons() {
         const buttons = [
-            { id: 'copyAllTabs', text: '$(files) ' + vscode.l10n.t("Copy All"), tooltip: vscode.l10n.t("Copy all opened tabs"), priority: 100 },
-            { id: 'copySelectedTabs', text: '$(list-selection) ' + vscode.l10n.t("Copy Selected"), tooltip: vscode.l10n.t("Copy selected tabs"), priority: 99 },
-            { id: 'copyTabsCustomFormat', text: '$(settings-gear) ' + vscode.l10n.t("Copy Custom"), tooltip: vscode.l10n.t("Copy tabs with custom format"), priority: 98 }
+            { id: 'copyAllTabs', configKey: 'showCopyAllButton', text: '$(files) ' + vscode.l10n.t("Copy All"), tooltip: vscode.l10n.t("Copy all opened tabs"), priority: 100 },
+            { id: 'copySelectedTabs', configKey: 'showCopySelectedButton', text: '$(list-selection) ' + vscode.l10n.t("Copy Selected"), tooltip: vscode.l10n.t("Copy selected tabs"), priority: 99 },
+            { id: 'copyTabsCustomFormat', configKey: 'showCopyCustomButton', text: '$(settings-gear) ' + vscode.l10n.t("Copy Custom"), tooltip: vscode.l10n.t("Copy tabs with custom format"), priority: 98 }
         ];
 
-        buttons.forEach(({ id, text, tooltip, priority }) => {
-            const buttonId = id.replace(/[A-Z]/g, letter => letter.toLowerCase());
-            const configKey = `show${buttonId.charAt(0).toUpperCase() + buttonId.slice(1)}Button`;
+        buttons.forEach(({ id, configKey, text, tooltip, priority }) => {
+            // Get config value directly from workspace configuration
+            const isVisible = vscode.workspace.getConfiguration('copytabs').get(configKey, true);
             
-            if (ConfigManager.getConfig(configKey, true)) {
+            if (isVisible) {
                 const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, priority);
                 item.text = text;
                 item.tooltip = tooltip;
                 item.command = `copytabs.${id}`;
-                this.items.set(buttonId, item);
+                this.items.set(id, item);
                 item.show();
             }
         });

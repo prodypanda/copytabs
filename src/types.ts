@@ -13,6 +13,14 @@ export interface CopySettings {
     maxFileSize: number;
 }
 
+export interface CopyStatistics {
+    successCount: number;
+    failedCount: number;
+    totalTokens: number;
+    processedFiles: string[];
+    failedFiles: string[];
+}
+
 export interface ProcessedTab {
     content: string;
     error?: string;

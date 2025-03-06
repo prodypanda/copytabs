@@ -3,7 +3,7 @@
   "displayName": "%copytabs.displayName%",
   "description": "%copytabs.description%",
   "publisher": "Prodypanda",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "badges": [
     {
       "url": "https://vsmarketplacebadges.dev/version-short/prodypanda.copytabs.svg/",
@@ -117,31 +117,48 @@
           "order": 56,
           "description": "%copytabs.structuredTreePosition.Description%"
         },
+
+        
+        "copytabs.hideStatusBarButtons": {
+          "type": "boolean",
+          "default": false,
+          "order": 57,
+          "description": "%copytabs.hideStatusBarButtons.Description%"
+        },
         "copytabs.showCopyAllButton": {
           "type": "boolean",
           "default": true,
-          "order": 57,
+          "order": 58,
           "description": "%copytabs.showCopyAllButton.Description%"
         },
         "copytabs.showCopySelectedButton": {
           "type": "boolean",
           "default": true,
-          "order": 58,
+          "order": 59,
           "description": "%copytabs.showCopySelectedButton.Description%"
         },
         "copytabs.showCopyCustomButton": {
           "type": "boolean",
           "default": true,
-          "order": 59,
+          "order": 60,
           "description": "%copytabs.showCopyCustomButton.Description%"
         },
         "copytabs.copyToClipboard": {
           "type": "boolean",
           "default": false,
-          "order": 60,
+          "order": 61,
           "description": "%copytabs.copyToClipboard.Description%"
+        },
+        "copytabs.showClipboardModeButton": {
+          "type": "boolean",
+          "default": true,
+          "order": 62,
+          "description": "%copytabs.showClipboardModeButton.Description%"
         }
       }
+
+   
+
     },
     "commands": [
       {

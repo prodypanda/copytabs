@@ -1,4 +1,5 @@
 # 📋 Copy All Tabs to New Tab - VS Code Extension
+<div align="center">[![Version](https://img.shields.io/visual-studio-marketplace/v/prodypanda.copytabs?color=blue&style=for-the-badge&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs)[![Installs](https://img.shields.io/visual-studio-marketplace/i/prodypanda.copytabs?style=for-the-badge&logo=microsoft)](https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs)[![Rating](https://img.shields.io/visual-studio-marketplace/stars/prodypanda.copytabs?style=for-the-badge&logo=github)](https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs)</div>
 
 This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab or directly to your clipboard, including their file locations. It's a powerful tool for various use cases, especially when working with AI code assistants or needing to share your codebase context.
 
@@ -91,7 +92,6 @@ The History Panel allows you to:
 - See timestamps for each copy
 - Track remaining history slots
 
-
 ### Using Commands:
 
 You can also access all features through the Command Palette (F1 or Ctrl+Shift+P / Cmd+Shift+P):
@@ -117,6 +117,24 @@ When enabled, a structured file tree is included at the top (or bottom) of the c
 5. Paste the copied content and ask for code review, optimization suggestions, or any other coding assistance.
 
 This workflow allows you to quickly provide full context to the AI assistant, leading to more accurate and helpful responses.
+
+## 📊 Copy Statistics
+
+When copying tabs, you'll now see detailed statistics in the notification:
+- ✅Number of successfully copied files
+- ❌Number of failed files (if any)
+- ❌List of failed files (if any)
+- 📊Total token count (useful for AI assistants)
+
+Example notification:
+```
+5 Tabs copied to clipboard!-✅ Success: 5-📊 Tokens: 1,234
+```
+
+Or with failures:
+```
+3 Tabs copied to clipboard!-✅ Success: 3-❌ Failed: 2-❌ Files: test.jpg, binary.exe-📊 Tokens: 567
+```
 
 ## ⚙️ Configuration
 
@@ -155,7 +173,23 @@ There are no known issues at this time. If you encounter any problems, please fi
 
 ## 📝 Release Notes
 
-### [1.0.0] - 2024-03-05
+## [1.0.3] - 2025-03-06
+
+### Added
+- Restored file count in copy notifications
+- Added token count statistics to notifications
+- Added failed files list to notifications for better error tracking
+- Added detailed copy statistics:
+  - Success count
+  - Failed count
+  - Total tokens
+  - Failed files list
+
+### Changed
+- Improved notification format for better readability
+- Updated documentation with new notification features
+
+## [1.0.0] - 2024-03-05
 
 Major update focusing on History management & Localization:
 - New History Panel feature:
@@ -174,7 +208,7 @@ Major update focusing on History management & Localization:
 - New keyboard shortcut:
   - `Ctrl/Cmd+Shift+H` to open history panel
 
-### [0.3.0] - 2024-03-02
+## [0.3.0] - 2024-03-02
 
 Major update focusing on stability and user experience:
 - Improved error handling and recovery
@@ -184,40 +218,6 @@ Major update focusing on stability and user experience:
 - Better handling of large files
 - Improved status bar management
 
-## [0.2.0] - 2024-10-01
-
-### Added
-- New Clipboard Mode feature:
-  - Toggle between copying to clipboard or new tab
-  - New status bar item to show and toggle the current mode
-  - New configuration option: `copytabs.copyToClipboard`
-  - New command and keyboard shortcut to toggle modes
-
-## [0.1.2] - 2024-08-07
-
-### Added
-- New configuration options to control the visibility of status bar buttons:
-  - `copytabs.showCopyAllButton`
-  - `copytabs.showCopySelectedButton`
-  - `copytabs.showCopyCustomButton`
-- Dynamic update of status bar items when configuration changes
-
-### Changed
-- Updated README with information about new configuration options
-- Improved code structure to support customizable status bar items
-
-### 0.1.1
-
-- Added demonstration videos to the README for better feature visualization
-- Various bug fixes and performance improvements
-
-### 0.1.0
-
-- Added "Copy Selected Tabs" feature
-- Added "Copy Tabs with Custom Format" feature
-- Added structured file tree feature
-- Added keyboard shortcuts for new features
-- Updated status bar items for quick access to all features
 
 For a full list of changes, please see the [CHANGELOG.md](CHANGELOG.md) file.
 

@@ -9,6 +9,7 @@
     "copytabs.displayName": "copytabs for VSCode (copytabs pour VSCode)",
     "copytabs.description": "Cette extension Visual Studio Code vous permet de copier le contenu de tous les onglets ouverts dans un nouvel onglet, y compris leurs emplacements de fichiers. Parfaite pour partager le contexte du code avec des assistants IA, des revues de code, de la documentation, du débogage et de l’enseignement. Compilez et partagez facilement votre projet entier ou des fichiers sélectionnés avec des options configurables pour un flux de travail fluide.",
     "copytabs.configuration.title": "Copier tous les onglets",
+    "copytabs.hideStatusBarButtons.Description": "Masquer tous les boutons de la barre d’état.",
     "copytabs.includeFileTypes.Description": "Types de fichiers à inclure dans le processus de copie. Laissez vide pour inclure tous les fichiers.",
     "copytabs.excludeFileTypes.Description": "Types de fichiers à exclure du processus de copie.",
     "copytabs.separatorLine.Description": "Ligne de séparation à utiliser entre les éléments copiés.",
@@ -19,5 +20,6 @@
     "copytabs.showCopyAllButton.Description": "Afficher le bouton 'Tout copier' dans la barre d’état.",
     "copytabs.showCopySelectedButton.Description": "Afficher le bouton 'Copier la sélection' dans la barre d’état.",
     "copytabs.showCopyCustomButton.Description": "Afficher le bouton 'Copie personnalisée' dans la barre d’état.",
-    "copytabs.copyToClipboard.Description": "Copier le contenu des onglets directement dans le presse-papiers au lieu de l’ouvrir dans un nouvel onglet."
+    "copytabs.copyToClipboard.Description": "Copier le contenu des onglets directement dans le presse-papiers au lieu de l’ouvrir dans un nouvel onglet.",
+    "copytabs.showClipboardModeButton.Description": "Afficher ou masquer le bouton de basculement du mode Presse-papiers dans la barre d’état"
 }

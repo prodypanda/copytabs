@@ -20,20 +20,25 @@ export class ConfigManager {
     }
 
     public static isClipboardMode(): boolean {
-        return this.getConfig('copyToClipboard', false);
+        const config = vscode.workspace.getConfiguration(this.CONFIG_NAME);
+        return config.get('copyToClipboard', false);
     }
 
     public static async toggleClipboardMode(): Promise<void> {
+        const config = vscode.workspace.getConfiguration(this.CONFIG_NAME);
         const currentMode = this.isClipboardMode();
-        await this.updateConfig('copyToClipboard', !currentMode);
+        await config.update('copyToClipboard', !currentMode, vscode.ConfigurationTarget.Global);
+        // The configuration change event will handle the UI updates
     }
 
     public static getConfig<T>(key: string, defaultValue: T): T {
-        return vscode.workspace.getConfiguration(this.CONFIG_NAME).get(key, defaultValue);
+        const config = vscode.workspace.getConfiguration(this.CONFIG_NAME);
+        return config.get(key, defaultValue);
     }
 
-    private static updateConfig(key: string, value: any): Thenable<void> {
-        return vscode.workspace.getConfiguration(this.CONFIG_NAME).update(key, value, vscode.ConfigurationTarget.Global);
+    public static async updateConfig(key: string, value: any): Promise<void> {
+        const config = vscode.workspace.getConfiguration(this.CONFIG_NAME);
+        await config.update(key, value, vscode.ConfigurationTarget.Global);
     }
 }
 

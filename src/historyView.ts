@@ -317,15 +317,43 @@ export class HistoryViewProvider implements vscode.WebviewViewProvider {
                     }
 
                     .upgrade-button {
-                        background: #b1361e !important;
-                        color: white;
-                        opacity: 0.9;
-                        transition: all 0.3s ease;
+                        background: #666 !important;
+                        color: #ccc !important;
+                        opacity: 0.7 !important;
+                        cursor: not-allowed !important;
+                        transform: none !important;
                     }
 
                     .upgrade-button:hover {
-                        opacity: 1;
-                        transform: scale(1.05);
+                        opacity: 0.7 !important;
+                        transform: none !important;
+                    }
+
+                    .coming-soon-tooltip {
+                        display: none;
+                        position: absolute;
+                        background: var(--vscode-notifications-background);
+                        border: 1px solid var(--vscode-notifications-border);
+                        color: var(--vscode-notifications-foreground);
+                        padding: 8px 12px;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        width: 250px;
+                        top: 100%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        margin-top: 8px;
+                        z-index: 1000;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .upgrade-container {
+                        position: relative;
+                        display: inline-block;
+                    }
+
+                    .upgrade-container:hover .coming-soon-tooltip {
+                        display: block;
                     }
 
                     @keyframes pulse {
@@ -433,12 +461,24 @@ export class HistoryViewProvider implements vscode.WebviewViewProvider {
                         <div>
                             <strong>${vscode.l10n.t('History limit reached!')}</strong><br/>
                             ${vscode.l10n.t('New copies will remove the oldest entries.')}
-                            <br/><button class="upgrade-button" 
-                                    onclick="openExternal('https://www.buymeacoffee.com/prodypanda')"
-                                    style="margin-left: 4px; font-size: 11px; margin-top: 6px;">
-                                <i class="codicon codicon-star-full"></i>
-                                ${vscode.l10n.t('Upgrade Pro')}
-                            </button>
+                            <br/>
+                            <div class="upgrade-container">
+                                <button class="upgrade-button" disabled
+                                        style="margin-left: 4px; font-size: 11px; margin-top: 6px;">
+                                    <i class="codicon codicon-star-full"></i>
+                                    ${vscode.l10n.t('Pro Features Coming Soon')}
+                                </button>
+                                <div class="coming-soon-tooltip">
+                                    <strong>🚀 Coming in the Next Release:</strong><br/>
+                                    • Unlimited history storage<br/>
+                                    • Add AI-Shrink button<br/>
+                                    • Advanced search and filtering<br/>
+                                    • Cloud sync across devices<br/>
+                                    • Import/Export copied tabs<br/>
+                                    • Auto save on specific json file<br/>
+                                    • And much more!
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ` : ''}

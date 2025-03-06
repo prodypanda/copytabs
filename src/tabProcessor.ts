@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { CopySettings } from './types';
+import { CopySettings, CopyStatistics } from './types';
 import { commentPatterns, extensionToLanguage } from './commentPatterns';
 import { handleError } from './utils';
 
@@ -9,9 +9,29 @@ export class TabProcessor {
         tabs: vscode.Tab[], 
         settings: CopySettings, 
         token: vscode.CancellationToken
-    ): Promise<string[]> {
-        return Promise.all(tabs.map(tab => this.processTab(tab, settings, token)))
-            .then(results => results.filter(content => content.length > 0));
+    ): Promise<[string[], CopyStatistics]> {
+        const stats: CopyStatistics = {
+            successCount: 0,
+            failedCount: 0,
+            totalTokens: 0,
+            processedFiles: [],
+            failedFiles: []
+        };
+
+        const results = await Promise.all(tabs.map(async tab => {
+            const result = await this.processTab(tab, settings, token);
+            if (result.length > 0) {
+                stats.successCount++;
+                stats.processedFiles.push(tab.label);
+                stats.totalTokens += result.split(/\s+/).length;
+            } else if (tab.input instanceof vscode.TabInputText) {
+                stats.failedCount++;
+                stats.failedFiles.push(tab.label);
+            }
+            return result;
+        }));
+
+        return [results.filter(content => content.length > 0), stats];
     }
 
     private static async processTab(

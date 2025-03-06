@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { CopySettings, FileStructure } from './types';
+import { CopySettings, FileStructure, CopyStatistics } from './types';
 import { handleError, addPathToStructure, formatFileTree } from './utils';
 import { TabProcessor } from './tabProcessor';
 import { StatusBarManager } from './statusBar';
@@ -29,12 +29,21 @@ export async function activate(context: vscode.ExtensionContext) {
             vscode.window.registerWebviewViewProvider(HistoryViewProvider.viewType, historyViewProvider)
         );
 
+        // Add this new configuration change listener
+        const configListener = vscode.workspace.onDidChangeConfiguration(e => {
+            if (e.affectsConfiguration('copytabs.copyToClipboard')) {
+                const isClipboardMode = ConfigManager.isClipboardMode();
+                const mode = isClipboardMode ? 'Clipboard Mode' : 'Tab Mode';
+                vscode.window.showInformationMessage(`Switched to ${mode}`);
+                statusBarManager.updateModeDisplay();
+            } else if (e.affectsConfiguration('copytabs')) {
+                statusBarManager.recreateItems();
+            }
+        });
+
+        context.subscriptions.push(configListener);
+
         context.subscriptions.push(
-            vscode.workspace.onDidChangeConfiguration(e => {
-                if (e.affectsConfiguration('copytabs')) {
-                    statusBarManager.recreateItems();
-                }
-            }),
             vscode.commands.registerCommand('copytabs.copyAllTabs', copyAllTabs),
             vscode.commands.registerCommand('copytabs.copySelectedTabs', copySelectedTabs),
             vscode.commands.registerCommand('copytabs.copyTabsCustomFormat', copyTabsCustomFormat),
@@ -55,28 +64,41 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 // Rest of the file remains unchanged
+// Simplify the toggleClipboardMode function
 async function toggleClipboardMode() {
     await ConfigManager.toggleClipboardMode();
-    statusBarManager.updateModeDisplay();
-    const mode = ConfigManager.isClipboardMode()
-        ? vscode.l10n.t('Clipboard Mode')
-        : vscode.l10n.t('Tab Mode');
-    const switchtotranslated = vscode.l10n.t('Switched to ');
-    vscode.window.showInformationMessage(`${switchtotranslated} ${mode}`);
+    // Remove the manual update and notification here since it will be handled by the configuration change event
 }
 
-async function handleContent(content: string, description: string = vscode.l10n.t('Copied content')) {
+async function handleContent(
+    content: string, 
+    description: string = vscode.l10n.t('Copied content'),
+    stats?: CopyStatistics
+) {
     const copyToClipboard = ConfigManager.isClipboardMode();
+    const mode = copyToClipboard ? 'clipboard' : 'new tab';
+    
+    let message = `📋 Tabs copied to ${mode}!\n`;
+    if (stats) {
+        message = `${stats.successCount} Tabs copied to ${mode}!\n`;
+        message += `-✅ Success: ${stats.successCount} \n`;
+        if (stats.failedCount > 0) {
+            message += `-❌ Failed: ${stats.failedCount} \n`;
+            if (stats.failedFiles.length > 0) {
+                message += `-❌ files: ${stats.failedFiles.join(', ')}\n`;
+            }
+        }
+        message += `-📊 Tokens: ${stats.totalTokens.toLocaleString()}`;
+    }
 
     if (copyToClipboard) {
         await vscode.env.clipboard.writeText(content);
-        vscode.window.showInformationMessage(vscode.l10n.t('Content copied to clipboard!'));
     } else {
         const newDoc = await vscode.workspace.openTextDocument({ content, language: 'plaintext' });
         await vscode.window.showTextDocument(newDoc, { preview: false });
-        vscode.window.showInformationMessage(vscode.l10n.t('Content copied to new tab!'));
     }
 
+    vscode.window.showInformationMessage(message, { modal: false });
     historyManager.addToHistory(content, description);
 }
 
@@ -101,12 +123,21 @@ async function copyAllTabs() {
         }
 
         let combinedContent = '';
+        let copyStats: CopyStatistics = {
+            successCount: 0,
+            failedCount: 0,
+            totalTokens: 0,
+            processedFiles: [],
+            failedFiles: []
+        };
+        
         await vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
             title: vscode.l10n.t('Copying tabs...'),
             cancellable: true
         }, async (progress, token) => {
-            const chunks = await processTabsWithProgress(openedTabs, settings, progress, token);
+            const [chunks, stats] = await processTabsWithProgress(openedTabs, settings, progress, token);
+            copyStats = stats;
             if (chunks.length) {
                 combinedContent = chunks.join(`\n\n${settings.separatorLine}\n\n`);
             }
@@ -122,7 +153,11 @@ async function copyAllTabs() {
         }
 
         if (combinedContent) {
-            await handleContent(combinedContent, openedTabs.length + vscode.l10n.t(' Copied tabs'));
+            await handleContent(
+                combinedContent, 
+                `${openedTabs.length} tabs copied`,
+                copyStats
+            );
         } else {
             vscode.window.showInformationMessage(vscode.l10n.t('No matching tabs found to copy.'));
         }
@@ -137,26 +172,40 @@ async function processTabsWithProgress(
     settings: CopySettings,
     progress: vscode.Progress<{ message?: string; increment?: number }>,
     token: vscode.CancellationToken
-): Promise<string[]> {
+): Promise<[string[], CopyStatistics]> {
     const chunkSize = Math.max(1, Math.floor(5242880 / settings.maxFileSize));
     const results: string[] = [];
+    const totalStats: CopyStatistics = {
+        successCount: 0,
+        failedCount: 0,
+        totalTokens: 0,
+        processedFiles: [],
+        failedFiles: []
+    };
+
+    const totalChunks = Math.ceil(tabs.length / chunkSize);
     
     for (let i = 0; i < tabs.length; i += chunkSize) {
-        if (token.isCancellationRequested) {
-            break;
-        }
+        if (token.isCancellationRequested) break;
 
         const chunk = tabs.slice(i, i + chunkSize);
-        const processed = await TabProcessor.processChunk(chunk, settings, token);
+        const [processed, chunkStats] = await TabProcessor.processChunk(chunk, settings, token);
+        
         results.push(...processed);
+        totalStats.successCount += chunkStats.successCount;
+        totalStats.failedCount += chunkStats.failedCount;
+        totalStats.totalTokens += chunkStats.totalTokens;
+        totalStats.processedFiles.push(...chunkStats.processedFiles);
+        totalStats.failedFiles.push(...chunkStats.failedFiles);
 
+        const currentEnd = Math.min(tabs.length, i + chunkSize);
         progress.report({
-            increment: (chunkSize / tabs.length) * 100,
-            message: `Processing files ${i + 1} to ${Math.min(i + chunkSize, tabs.length)}`
+            increment: (100 / totalChunks),
+            message: `Processing files ${i + 1} to ${currentEnd} of ${tabs.length}`
         });
     }
 
-    return results;
+    return [results, totalStats];
 }
 
 async function copySelectedTabs() {
