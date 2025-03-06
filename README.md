@@ -1,11 +1,10 @@
 # 📋 Copy All Tabs to New Tab - VS Code Extension
 
 
-![Visual Studio Marketplace Release Date](https://img.shields.io/visual-studio-marketplace/release-date/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
-![Visual Studio Marketplace Last Updated](https://img.shields.io/visual-studio-marketplace/last-updated/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
-![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
-![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
-![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)
+[![Visual Studio Marketplace Release Date](https://img.shields.io/visual-studio-marketplace/release-date/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
+[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
 
 
 
@@ -14,6 +13,8 @@ This Visual Studio Code extension allows you to copy the content of all opened t
 Effortlessly compile and share your entire project context with this powerful VS Code extension. Perfect for AI-assisted coding, code reviews, documentation, and teaching.
 
 Streamline your workflow and enhance collaboration by quickly sharing your codebase context. Ideal for use with AI code assistants, team code reviews, and more!
+
+[![Visual Studio Marketplace Last Updated](https://img.shields.io/visual-studio-marketplace/last-updated/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
 
 ## 🚀 Key Features
 
