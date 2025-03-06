@@ -1,5 +1,4 @@
 # 📋 Copy All Tabs to New Tab - VS Code Extension
-<div align="center">[![Version](https://img.shields.io/visual-studio-marketplace/v/prodypanda.copytabs?color=blue&style=for-the-badge&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs)[![Installs](https://img.shields.io/visual-studio-marketplace/i/prodypanda.copytabs?style=for-the-badge&logo=microsoft)](https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs)[![Rating](https://img.shields.io/visual-studio-marketplace/stars/prodypanda.copytabs?style=for-the-badge&logo=github)](https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs)</div>
 
 This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab or directly to your clipboard, including their file locations. It's a powerful tool for various use cases, especially when working with AI code assistants or needing to share your codebase context.
 
