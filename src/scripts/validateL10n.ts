@@ -41,7 +41,6 @@ function validateL10nFiles() {
         // const frTranslations = JSON.parse(fs.readFileSync(frBundle, 'utf8'));
 
         // Vérifier que toutes les clés sont présentes
-        const defaultKeys = Object.keys(defaultTranslations);
         // const enKeys = Object.keys(enTranslations);
         // const frKeys = Object.keys(frTranslations);
 

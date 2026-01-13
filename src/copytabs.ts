@@ -7,11 +7,6 @@ import ConfigManager from './config';
 import { HistoryViewProvider } from './historyView';
 import { HistoryManager } from './historyManager';
 
-interface ProcessedTab {
-    content: string;
-    error?: string;
-}
-
 let statusBarManager: StatusBarManager;
 let historyManager: HistoryManager;
 
@@ -286,10 +281,6 @@ async function copyTabsCustomFormat() {
 
         await handleContent(combinedContent, vscode.l10n.t('Copied tabs with custom format'));
     }
-}
-
-function addLineNumbers(content: string): string {
-    return content.split('\n').map((line, index) => `${index + 1}: ${line}`).join('\n');
 }
 
 function generateStructuredFileTree(tabs: vscode.Tab[]): string {

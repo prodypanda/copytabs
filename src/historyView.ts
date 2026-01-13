@@ -13,7 +13,7 @@ export class HistoryViewProvider implements vscode.WebviewViewProvider {
 
     public resolveWebviewView(
         webviewView: vscode.WebviewView,
-        context: vscode.WebviewViewResolveContext,
+        _context: vscode.WebviewViewResolveContext,
         _token: vscode.CancellationToken,
     ) {
         webviewView.webview.options = {
@@ -78,7 +78,6 @@ export class HistoryViewProvider implements vscode.WebviewViewProvider {
 
     private getWebviewContent(history: any[]) {
         const isClipboardMode = this.historyManager.isClipboardMode();
-        const remainingSlots = this.historyManager.getRemainingSlots();
         const isAtLimit = history.length >= HISTORY_LIMIT;
         
         return `

@@ -1,0 +1,6 @@
+out/
+node_modules/
+*.min.js
+dist/
+.vscode-test/
+coverage/
