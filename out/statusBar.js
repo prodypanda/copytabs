@@ -97,7 +97,7 @@ class StatusBarManager {
         }
     }
     dispose() {
-        this.items.forEach(item => item.dispose());
+        this.items.forEach(item => { item.dispose(); });
         this.items.clear();
     }
     recreateItems() {

@@ -48,14 +48,14 @@ class Logger {
     static error(message, error) {
         this.getOutputChannel().appendLine(`[ERROR] ${message}`);
         if (error) {
-            this.getOutputChannel().appendLine(`${error.message}`);
+            this.getOutputChannel().appendLine(error.message);
             this.getOutputChannel().appendLine(`${error.stack}`);
         }
     }
     static warn(message, error) {
         this.getOutputChannel().appendLine(`[WARN] ${message}`);
         if (error) {
-            this.getOutputChannel().appendLine(`${error.message}`);
+            this.getOutputChannel().appendLine(error.message);
         }
     }
     static show() {

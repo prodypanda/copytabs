@@ -52,7 +52,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "onCommand:copytabs.copyAllTabs",
+    "onCommand:copytabs.copySelectedTabs",
+    "onCommand:copytabs.copyTabsCustomFormat",
+    "onCommand:copytabs.toggleClipboardMode",
+    "onCommand:copytabs.showHistory",
+    "onCommand:copytabs.clearHistory",
+    "onView:copytabs.historyView"
   ],
   "main": "./out/copytabs.js",
   "icon": "icon.png",
