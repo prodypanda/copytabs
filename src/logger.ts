@@ -17,7 +17,7 @@ export class Logger {
   public static error(message: string, error?: Error): void {
     this.getOutputChannel().appendLine(`[ERROR] ${message}`);
     if (error) {
-      this.getOutputChannel().appendLine(`${error.message}`);
+      this.getOutputChannel().appendLine(error.message);
       this.getOutputChannel().appendLine(`${error.stack}`);
     }
   }
@@ -25,7 +25,7 @@ export class Logger {
   public static warn(message: string, error?: Error): void {
     this.getOutputChannel().appendLine(`[WARN] ${message}`);
     if (error) {
-      this.getOutputChannel().appendLine(`${error.message}`);
+      this.getOutputChannel().appendLine(error.message);
     }
   }
 

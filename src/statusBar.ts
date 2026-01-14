@@ -70,7 +70,7 @@ export class StatusBarManager {
     }
 
     public dispose() {
-        this.items.forEach(item => item.dispose());
+        this.items.forEach(item => { item.dispose(); });
         this.items.clear();
     }
 

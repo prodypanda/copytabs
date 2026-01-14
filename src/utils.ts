@@ -15,7 +15,7 @@ export function addPathToStructure(structure: FileStructure, parts: string[]): v
             current[part] = null;
         } else {
             current[part] = current[part] || {};
-            current = current[part] as FileStructure;
+            current = current[part];
         }
     }
 }

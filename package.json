@@ -31,9 +31,7 @@
     "email": "admin@prodypanda.com"
   },
   "homepage": "https://github.com/prodypanda/copytabs#readme",
-  
   "pricing": "Trial",
-  
   "sponsor": {
     "url": "https://github.com/sponsors/prodypanda"
   },
@@ -46,13 +44,10 @@
       "type": "buymeacoffee",
       "url": "https://www.buymeacoffee.com/prodypanda"
     }
-  ]
-  
-  ,
+  ],
   "engines": {
     "vscode": "^1.91.0"
   },
-  
   "categories": [
     "Other"
   ],
@@ -117,8 +112,6 @@
           "order": 56,
           "description": "%copytabs.structuredTreePosition.Description%"
         },
-
-        
         "copytabs.hideStatusBarButtons": {
           "type": "boolean",
           "default": false,
@@ -156,9 +149,6 @@
           "description": "%copytabs.showClipboardModeButton.Description%"
         }
       }
-
-   
-
     },
     "commands": [
       {
@@ -259,8 +249,9 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.0",
     "eslint": "^9.0.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.4.5",
-    "ts-node": "^10.9.1"
+    "typescript-eslint": "^8.53.0"
   },
   "l10n": "./l10n",
   "author": {
@@ -282,6 +273,5 @@
     "color": "#C80000",
     "theme": "dark"
   },
-  "qna":  "https://github.com/prodypanda/copytabs/discussions/categories/q-a"
-  
+  "qna": "https://github.com/prodypanda/copytabs/discussions/categories/q-a"
 }
