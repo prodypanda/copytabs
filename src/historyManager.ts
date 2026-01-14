@@ -66,10 +66,6 @@ export class HistoryManager {
         return ConfigManager.isClipboardMode();
     }
 
-    private loadHistory() {
-        this.history = this.context.globalState.get<HistoryItem[]>(HISTORY_KEY, []);
-    }
-
     private async saveHistory() {
         await this.context.globalState.update(HISTORY_KEY, this.history);
     }

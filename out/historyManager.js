@@ -89,9 +89,6 @@ class HistoryManager {
     isClipboardMode() {
         return config_1.default.isClipboardMode();
     }
-    loadHistory() {
-        this.history = this.context.globalState.get(HISTORY_KEY, []);
-    }
     async saveHistory() {
         await this.context.globalState.update(HISTORY_KEY, this.history);
     }

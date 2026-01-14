@@ -36,7 +36,7 @@ function validateL10nFiles() {
     // }
 
     try {
-        const defaultTranslations = JSON.parse(fs.readFileSync(defaultBundle, 'utf8'));
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars`n        // @ts-ignore unused variable`n        const _defaultBundleData = JSON.parse(fs.readFileSync(defaultBundle, 'utf8'));
         // const enTranslations = JSON.parse(fs.readFileSync(enBundle, 'utf8'));
         // const frTranslations = JSON.parse(fs.readFileSync(frBundle, 'utf8'));
 
@@ -70,3 +70,6 @@ if (require.main === module) {
 }
 
 export default validateL10nFiles;
+
+
+

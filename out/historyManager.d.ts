@@ -16,7 +16,6 @@ export declare class HistoryManager {
     clearHistory(): Promise<void>;
     getHistory(): HistoryItem[];
     isClipboardMode(): boolean;
-    private loadHistory;
     private saveHistory;
     getFormattedTimestamp(timestamp: number): string;
     getRemainingSlots(): number;
