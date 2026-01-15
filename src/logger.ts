@@ -1,42 +1,62 @@
 import * as vscode from "vscode";
 
+/**
+ * Logger utility class for extension-wide logging
+ * Uses VS Code's output channel to display logs to users
+ */
 export class Logger {
-  private static outputChannel: vscode.OutputChannel | undefined;
+  private static output: vscode.OutputChannel | null = null;
 
-  private static getOutputChannel(): vscode.OutputChannel {
-    if (!this.outputChannel) {
-      this.outputChannel = vscode.window.createOutputChannel("copytabs");
+  /**
+   * Get or create the output channel
+   */
+  private static getOutput(): vscode.OutputChannel {
+    if (!this.output) {
+      this.output = vscode.window.createOutputChannel("copytabs", {
+        log: true,
+      });
     }
-    return this.outputChannel;
+    return this.output;
   }
 
-  public static info(message: string): void {
-    this.getOutputChannel().appendLine(`[INFO] ${message}`);
+  /**
+   * Log an info-level message
+   */
+  static info(message: string): void {
+    this.getOutput().info(`[INFO] ${message}`);
   }
 
-  public static error(message: string, error?: Error): void {
-    this.getOutputChannel().appendLine(`[ERROR] ${message}`);
-    if (error) {
-      this.getOutputChannel().appendLine(error.message);
-      this.getOutputChannel().appendLine(`${error.stack}`);
+  /**
+   * Log a warning-level message
+   */
+  static warn(message: string, error?: Error): void {
+    const errorDetails = error ? ` - ${error.message}` : "";
+    this.getOutput().warn(`[WARN] ${message}${errorDetails}`);
+  }
+
+  /**
+   * Log an error-level message
+   */
+  static error(message: string, error?: Error): void {
+    const errorDetails = error ? ` - ${error.message}` : "";
+    this.getOutput().error(`[ERROR] ${message}${errorDetails}`);
+    if (error?.stack) {
+      this.getOutput().error(`Stack: ${error.stack}`);
     }
   }
 
-  public static warn(message: string, error?: Error): void {
-    this.getOutputChannel().appendLine(`[WARN] ${message}`);
-    if (error) {
-      this.getOutputChannel().appendLine(error.message);
-    }
+  /**
+   * Show the output channel to the user
+   */
+  static show(): void {
+    this.getOutput().show();
   }
 
-  public static show(): void {
-    this.getOutputChannel().show();
-  }
-
-  public static dispose(): void {
-    if (this.outputChannel) {
-      this.outputChannel.dispose();
-      this.outputChannel = undefined;
-    }
+  /**
+   * Dispose the logger and clean up
+   */
+  static dispose(): void {
+    this.output?.dispose();
+    this.output = null;
   }
 }

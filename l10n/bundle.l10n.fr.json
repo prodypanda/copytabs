@@ -39,5 +39,17 @@
   "Copied tabs with custom format": "Onglets copiés avec format personnalisé",
   "Latest": "Plus récent",
   "Oldest": "Plus ancien",
-  "{0} selected tabs copied": "{0} onglets sélectionnés copiés"
+  "{0} selected tabs copied": "{0} onglets sélectionnés copiés",
+  "Pro Features Coming Soon": "Fonctionnalités Pro à venir bientôt",
+  "Coming in the Next Release:": "À venir dans la prochaine version :",
+  "Switched to ": "Basculé vers ",
+  "An error occurred while copying tabs.": "Une erreur s'est produite lors de la copie des onglets.",
+  "Output size ({0}MB) exceeds 50MB limit. Some content may be truncated.": "La taille de la sortie ({0}MB) dépasse la limite de 50MB. Certains contenus peuvent être tronqués.",
+  "Clipboard Mode": "Mode Presse-papiers",
+  "Tab Mode": "Mode Onglet",
+  "Format string is too long (max 10KB)": "La chaîne de format est trop longue (max 10KB)",
+  "{0} copied selected tabs": "{0} onglets sélectionnés copiés",
+  "No history items yet": "Aucun élément d'historique pour le moment",
+  "Copy all opened tabs": "Copier tous les onglets ouverts",
+  "Copy selected tabs": "Copier les onglets sélectionnés"
 }

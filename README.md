@@ -1,12 +1,9 @@
 # 📋 Copy All Tabs to New Tab - VS Code Extension
 
-
 [![Visual Studio Marketplace Release Date](https://img.shields.io/visual-studio-marketplace/release-date/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
 [![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
 [![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/prodypanda.copytabs?style=for-the-badge&color=bf2a2a)](https://marketplace.visualstudio.com/items?itemName=Prodypanda.copytabs)
-
-
 
 This Visual Studio Code extension allows you to copy the content of all opened tabs into a new tab or directly to your clipboard, including their file locations. It's a powerful tool for various use cases, especially when working with AI code assistants or needing to share your codebase context.
 
@@ -62,37 +59,43 @@ Streamline your workflow and enhance collaboration by quickly sharing your codeb
 There are four main features, each accessible via the status bar, command palette, or keyboard shortcut:
 
 ### 1. Toggle Clipboard Mode:
+
 - Status Bar: Click the "🔄 Clipboard Mode" or "🪟 Tab Mode" item to toggle
 - Command Palette: "Toggle Clipboard Mode"
-- Keyboard Shortcut: `Ctrl+Shift+T` (Windows/Linux) or `Cmd+Shift+T` (macOS)
+- Keyboard Shortcut: `Ctrl+Alt+Shift+T` (Windows/Linux) or `Cmd+Option+Shift+T` (macOS)
 
 ### 2. Copy All Tabs:
+
 - Status Bar: Click on the "📁 Copy All" item
 - Command Palette: "Copy All Tabs to New Tab"
-- Keyboard Shortcut: `Ctrl+Shift+C` (Windows/Linux) or `Cmd+Shift+C` (macOS)
+- Keyboard Shortcut: `Ctrl+Alt+Shift+C` (Windows/Linux) or `Cmd+Option+Shift+C` (macOS)
 
 ![Copy All Tabs Demo](src/assets/copyallbtn.gif)
 
 ### 3. Copy Selected Tabs:
+
 - Status Bar: Click on the "✅ Copy Selected" item
 - Command Palette: "Copy Selected Tabs to New Tab"
-- Keyboard Shortcut: `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)
+- Keyboard Shortcut: `Ctrl+Alt+Shift+S` (Windows/Linux) or `Cmd+Option+Shift+S` (macOS)
 
 ![Copy Selected Tabs Demo](src/assets/copyselected.gif)
 
 ### 4. Copy Tabs with Custom Format:
+
 - Status Bar: Click on the "⚙️ Copy Custom" item
 - Command Palette: "Copy Tabs with Custom Format"
-- Keyboard Shortcut: `Ctrl+Shift+F` (Windows/Linux) or `Cmd+Shift+F` (macOS)
+- Keyboard Shortcut: `Ctrl+Alt+Shift+F` (Windows/Linux) or `Cmd+Option+Shift+F` (macOS)
 
 ![Copy Custom with Tree Demo](src/assets/copycustomwithtree.gif)
 
 ### 5. History Panel:
+
 - View Button: Click the 📜 history icon in the activity bar
 - Command Palette: "Show History Panel"
-- Keyboard Shortcut: `Ctrl+Shift+H` (Windows/Linux) or `Cmd+Shift+H` (macOS)
+- Keyboard Shortcut: `Ctrl+Alt+Shift+H` (Windows/Linux) or `Cmd+Option+Shift+H` (macOS)
 
 The History Panel allows you to:
+
 - View your copy history
 - Preview copied content
 - Re-copy previous items
@@ -130,17 +133,20 @@ This workflow allows you to quickly provide full context to the AI assistant, le
 ## 📊 Copy Statistics
 
 When copying tabs, you'll now see detailed statistics in the notification:
+
 - ✅Number of successfully copied files
 - ❌Number of failed files (if any)
 - ❌List of failed files (if any)
 - 📊Total token count (useful for AI assistants)
 
 Example notification:
+
 ```
 5 Tabs copied to clipboard!-✅ Success: 5-📊 Tokens: 1,234
 ```
 
 Or with failures:
+
 ```
 3 Tabs copied to clipboard!-✅ Success: 3-❌ Failed: 2-❌ Files: test.jpg, binary.exe-📊 Tokens: 567
 ```
@@ -160,14 +166,35 @@ This extension contributes the following settings:
 - `copytabs.showCopyAllButton`: Show the 'Copy All' button in the status bar.
 - `copytabs.showCopySelectedButton`: Show the 'Copy Selected' button in the status bar.
 - `copytabs.showCopyCustomButton`: Show the 'Copy Custom' button in the status bar.
+- `copytabs.maxFileSize`: Maximum file size in bytes to include (default: 5MB = 5242880 bytes).
 
 You can modify these settings in your VS Code settings.json file. For example:
 
 ```json
 {
-    "copytabs.copyToClipboard": true,
-    "copytabs.showCopyCustomButton": false
+  "copytabs.copyToClipboard": true,
+  "copytabs.showCopyCustomButton": false,
+  "copytabs.maxFileSize": 10485760
 }
+```
+
+### Customizing Keyboard Shortcuts
+
+You can customize the keyboard shortcuts for each command. Open the Keyboard Shortcuts editor (Ctrl+K Ctrl+S or Cmd+K Cmd+S on macOS) and search for "copytabs" to modify them.
+
+Example custom keybinding in `keybindings.json`:
+
+```json
+[
+  {
+    "key": "ctrl+shift+c",
+    "command": "copytabs.copyAllTabs"
+  },
+  {
+    "key": "ctrl+shift+s",
+    "command": "copytabs.copySelectedTabs"
+  }
+]
 ```
 
 This allows you to customize which buttons appear in your status bar and how the extension behaves, optimizing your workspace according to your needs and preferences.
@@ -176,7 +203,52 @@ This allows you to customize which buttons appear in your status bar and how the
 
 This extension requires Visual Studio Code version 1.91.0 or higher.
 
-## 🐛 Known Issues
+## � Troubleshooting
+
+### Keybindings not working
+
+If the keyboard shortcuts are not responding:
+
+1. Open the Command Palette (Ctrl+Shift+P or Cmd+Shift+P on macOS)
+2. Search for "Keyboard Shortcuts" and open it
+3. Search for "copytabs" to see all available commands
+4. Check if there are conflicting keybindings from other extensions
+5. You can rebind to different keys by clicking the pencil icon and entering your preferred shortcut
+
+### Content not copied to clipboard
+
+If content is not being copied in clipboard mode:
+
+1. Verify that `copytabs.copyToClipboard` is set to `true` in your settings
+2. Check the Output panel (View → Output) and look for the "copytabs" channel
+3. Ensure you have at least one tab open in the editor
+4. Try copying to a new tab first (clipboard mode off) to verify the extension is working
+
+### History panel not appearing
+
+If the History view is not visible:
+
+1. Look for the "Copy History" icon (📜) in the Activity Bar on the left
+2. If not visible, open the Command Palette and run "Show Copy History"
+3. You can pin the view by right-clicking the icon and selecting "Pin"
+
+### Large files being skipped
+
+The extension has a configurable file size limit (default: 5MB) to prevent memory issues:
+
+1. Check your settings: look for `copytabs.maxFileSize`
+2. To include larger files, increase this value (in bytes)
+3. Be cautious with very large files as they may impact performance
+
+### Output size warning
+
+If you see "Output size exceeds 50MB limit" warning:
+
+1. Reduce the number of tabs you're copying
+2. Exclude certain file types using `copytabs.excludeFileTypes`
+3. Reduce the maximum file size with `copytabs.maxFileSize`
+
+## �🐛 Known Issues
 
 There are no known issues at this time. If you encounter any problems, please file an issue on the GitHub repository.
 
@@ -185,6 +257,7 @@ There are no known issues at this time. If you encounter any problems, please fi
 ## [1.0.3] - 2025-03-06
 
 ### Added
+
 - Restored file count in copy notifications
 - Added token count statistics to notifications
 - Added failed files list to notifications for better error tracking
@@ -195,12 +268,14 @@ There are no known issues at this time. If you encounter any problems, please fi
   - Failed files list
 
 ### Changed
+
 - Improved notification format for better readability
 - Updated documentation with new notification features
 
 ## [1.0.0] - 2024-03-05
 
 Major update focusing on History management & Localization:
+
 - New History Panel feature:
   - Dedicated activity bar view for copy history
   - Preview copied content
@@ -220,13 +295,13 @@ Major update focusing on History management & Localization:
 ## [0.3.0] - 2024-03-02
 
 Major update focusing on stability and user experience:
+
 - Improved error handling and recovery
 - Better progress reporting
 - More efficient file processing
 - Enhanced clipboard mode
 - Better handling of large files
 - Improved status bar management
-
 
 For a full list of changes, please see the [CHANGELOG.md](CHANGELOG.md) file.
 
@@ -245,10 +320,9 @@ If you find this extension helpful, consider:
 - Star the repository on GitHub
 - Leave a review on the VS Code Marketplace
 - Report any issues or suggest features on the GitHub repository
-<a href="https://www.buymeacoffee.com/ProdyPanda" target="_blank">
-        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" style="height: 41px; width: 174px;">
-    </a>
-
+  <a href="https://www.buymeacoffee.com/ProdyPanda" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" style="height: 41px; width: 174px;">
+  </a>
 
 💡 Try it now and supercharge your coding experience!
 

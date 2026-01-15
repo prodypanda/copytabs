@@ -1,0 +1,57 @@
+{
+  "chat.tools.terminal.autoApprove": {
+    "npm run compile": true,
+    "/^npm test 2>&1$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^npm run vscode:prepublish 2>&1$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^cd \"D:\\\\copytabs\\\\copytabs\"; git add src/ package\\.json package-lock\\.json; git commit -m \"Apply ESLint auto-fixes and dependency updates\n\n- Fix unnecessary template literal expressions\n- Install typescript-eslint dependency for proper linting\n- Improve code quality with eslint --fix\" 2>&1 \\| Select-Object -Last 5$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^npm run validate-l10n 2>&1$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^\\(Get-Content package\\.json \\| ConvertFrom-Json\\)\\.activationEvents$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^\\$json = Get-Content package\\.json -Raw \\| ConvertFrom-Json; \\$json\\.activationEvents = @\\(\"onCommand:copytabs\\.copyAllTabs\", \"onCommand:copytabs\\.copySelectedTabs\", \"onCommand:copytabs\\.copyTabsCustomFormat\", \"onCommand:copytabs\\.toggleClipboardMode\", \"onCommand:copytabs\\.showHistory\", \"onCommand:copytabs\\.clearHistory\", \"onView:copytabs\\.historyView\"\\); \\$json \\| ConvertTo-Json -Depth 100 \\| Set-Content package\\.json$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^\\(Get-Content package\\.json \\| ConvertFrom-Json\\)\\.activationEvents \\| ForEach-Object \\{ Write-Host \"  - \\$_\" \\}$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^npm run vscode:prepublish 2>&1 \\| Select-Object -Last 2$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^Get-Item src/config\\.ts \\| Select-Object -ExpandProperty FullName$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^npx eslint src --ext ts --fix 2>&1$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^node -e \"const j = require\\('\\./package\\.json'\\); console\\.log\\(JSON\\.stringify\\(j\\.contributes\\.menus, null, 2\\)\\)\"$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^# Add to package\\.nls\\.json\n\\$nls = Get-Content package\\.nls\\.json -Raw \\| ConvertFrom-Json\n\\$nls \\| Add-Member -NotePropertyName \"copytabs\\.command\\.copyFolder\" -NotePropertyValue \"Copy Folder\" -Force\n\\$nls \\| ConvertTo-Json -Depth 10 \\| Set-Content package\\.nls\\.json\n\n# Add to English L10n bundle\n\\$en = Get-Content l10n/bundle\\.l10n\\.json -Raw \\| ConvertFrom-Json\n\\$en \\| Add-Member -NotePropertyName \"copytabs\\.command\\.copyFolder\" -NotePropertyValue \"Copy Folder\" -Force\n\\$en \\| Add-Member -NotePropertyName \"copytabs\\.copyFolder\\.description\" -NotePropertyValue \"Copy folder with file selection\" -Force\n\\$en \\| ConvertTo-Json -Depth 10 \\| Set-Content l10n/bundle\\.l10n\\.json\n\n# Add to French L10n bundle\n\\$fr = Get-Content l10n/bundle\\.l10n\\.fr\\.json -Raw \\| ConvertFrom-Json\n\\$fr \\| Add-Member -NotePropertyName \"copytabs\\.command\\.copyFolder\" -NotePropertyValue \"Copier le dossier\" -Force\n\\$fr \\| Add-Member -NotePropertyName \"copytabs\\.copyFolder\\.description\" -NotePropertyValue \"Copier le dossier avec sélection de fichiers\" -Force\n\\$fr \\| ConvertTo-Json -Depth 10 \\| Set-Content l10n/bundle\\.l10n\\.fr\\.json\n\n# Add to German L10n bundle\n\\$de = Get-Content l10n/bundle\\.l10n\\.de\\.json -Raw \\| ConvertFrom-Json\n\\$de \\| Add-Member -NotePropertyName \"copytabs\\.command\\.copyFolder\" -NotePropertyValue \"Ordner kopieren\" -Force\n\\$de \\| Add-Member -NotePropertyName \"copytabs\\.copyFolder\\.description\" -NotePropertyValue \"Ordner mit Dateiauswahl kopieren\" -Force\n\\$de \\| ConvertTo-Json -Depth 10 \\| Set-Content l10n/bundle\\.l10n\\.de\\.json\n\nWrite-Host \"✅ All L10n bundles updated\"\n$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^# Remove the bad line first\n\\$content = Get-Content src/copytabs\\.ts -Raw\n\\$content = \\$content -replace '\\\\\\$copyFolderFunc\\\\r\\?\\\\n', ''\n\\$content \\| Set-Content src/copytabs\\.ts\nWrite-Host \"Removed bad \\$copyFolderFunc line\"\n$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  }
+}

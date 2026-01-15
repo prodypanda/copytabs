@@ -36,10 +36,21 @@
   "Where to place the file tree?": "Where to place the file tree?",
   "Copied tabs with custom format": "Copied tabs with custom format",
   "History limit reached!": "History limit reached!",
-  "New copies will remove the oldest entries.":"New copies will remove the oldest entries.",
+  "New copies will remove the oldest entries.": "New copies will remove the oldest entries.",
   "Latest": "Latest",
   "Oldest": "Oldest",
   "{0} selected tabs copied": "{0} copied selected tabs",
   "Pro Features Coming Soon": "Pro Features Coming Soon",
-  "Coming in the Next Release:": "Coming in the Next Release:"
+  "Coming in the Next Release:": "Coming in the Next Release:",
+  "An error occurred while copying tabs.": "An error occurred while copying tabs.",
+  "Output size ({0}MB) exceeds 50MB limit. Some content may be truncated.": "Output size ({0}MB) exceeds 50MB limit. Some content may be truncated.",
+  "Format string is too long (max 10KB)": "Format string is too long (max 10KB)",
+  "{0} copied selected tabs": "{0} copied selected tabs",
+  "No history items yet": "No history items yet",
+  "Please select a folder.": "Please select a folder.",
+  "No files selected.": "No files selected.",
+  "Copied folder contents": "Copied folder contents",
+  "Failed to copy folder": "Failed to copy folder",
+  "No files found in the selected folder.": "No files found in the selected folder.",
+  "Select files to copy from folder": "Select files to copy from folder"
 }

@@ -4,34 +4,13 @@
   "description": "%copytabs.description%",
   "publisher": "Prodypanda",
   "version": "1.0.4",
-  "badges": [
-    {
-      "url": "https://vsmarketplacebadges.dev/version-short/prodypanda.copytabs.svg/",
-      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
-      "description": "Extension Version"
-    },
-    {
-      "url": "https://vsmarketplacebadges.dev/installs-short/prodypanda.copytabs.svg/",
-      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
-      "description": "Extension Installs"
-    },
-    {
-      "url": "https://vsmarketplacebadges.dev/downloads-short/prodypanda.copytabs.svg/",
-      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
-      "description": "Extension Downloads"
-    },
-    {
-      "url": "https://vsmarketplacebadges.dev/rating-short/prodypanda.copytabs.svg/",
-      "href": "https://marketplace.visualstudio.com/items?itemName=prodypanda.copytabs",
-      "description": "Extension Rating"
-    }
-  ],
+  "main": "./out/copytabs.js",
+  "icon": "images/icon.png",
   "bugs": {
     "url": "https://github.com/prodypanda/copytabs/issues",
     "email": "admin@prodypanda.com"
   },
   "homepage": "https://github.com/prodypanda/copytabs#readme",
-  "pricing": "Trial",
   "sponsor": {
     "url": "https://github.com/sponsors/prodypanda"
   },
@@ -49,19 +28,19 @@
     "vscode": "^1.91.0"
   },
   "categories": [
-    "Other"
+    "Productivity",
+    "Utilities"
   ],
   "activationEvents": [
+    "onView:copytabs-history",
     "onCommand:copytabs.copyAllTabs",
     "onCommand:copytabs.copySelectedTabs",
     "onCommand:copytabs.copyTabsCustomFormat",
     "onCommand:copytabs.toggleClipboardMode",
     "onCommand:copytabs.showHistory",
     "onCommand:copytabs.clearHistory",
-    "onView:copytabs.historyView"
+    "onCommand:copytabs.copyFolder"
   ],
-  "main": "./out/copytabs.js",
-  "icon": "icon.png",
   "contributes": {
     "configuration": {
       "title": "%copytabs.configuration.title%",
@@ -153,6 +132,13 @@
           "default": true,
           "order": 62,
           "description": "%copytabs.showClipboardModeButton.Description%"
+        },
+        "copytabs.maxFileSize": {
+          "type": "number",
+          "default": 5242880,
+          "minimum": 1,
+          "order": 63,
+          "description": "%copytabs.maxFileSize.Description%"
         }
       }
     },
@@ -180,33 +166,46 @@
       {
         "command": "copytabs.clearHistory",
         "title": "%copytabs.command.clearHistory%"
+      },
+      {
+        "command": "copytabs.copyFolder",
+        "title": "%copytabs.command.copyFolder%"
       }
     ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "copytabs.copyFolder",
+          "when": "explorerResourceIsFolder",
+          "group": "1_modification"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "copytabs.copyAllTabs",
-        "key": "ctrl+shift+c",
-        "mac": "cmd+shift+c"
+        "key": "ctrl+alt+shift+c",
+        "mac": "cmd+alt+shift+c"
       },
       {
         "command": "copytabs.copySelectedTabs",
-        "key": "ctrl+shift+s",
-        "mac": "cmd+shift+s"
+        "key": "ctrl+alt+shift+s",
+        "mac": "cmd+alt+shift+s"
       },
       {
         "command": "copytabs.copyTabsCustomFormat",
-        "key": "ctrl+shift+f",
-        "mac": "cmd+shift+f"
+        "key": "ctrl+alt+shift+f",
+        "mac": "cmd+alt+shift+f"
       },
       {
         "command": "copytabs.toggleClipboardMode",
-        "key": "ctrl+shift+t",
-        "mac": "cmd+shift+t"
+        "key": "ctrl+alt+shift+t",
+        "mac": "cmd+alt+shift+t"
       },
       {
         "command": "copytabs.showHistory",
-        "key": "ctrl+shift+h",
-        "mac": "cmd+shift+h"
+        "key": "ctrl+alt+shift+h",
+        "mac": "cmd+alt+shift+h"
       }
     ],
     "viewsContainers": {
@@ -255,9 +254,8 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.0",
     "eslint": "^9.0.0",
-    "ts-node": "^10.9.1",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^8.53.0"
+    "ts-node": "^10.9.1"
   },
   "l10n": "./l10n",
   "author": {
@@ -278,6 +276,5 @@
   "galleryBanner": {
     "color": "#C80000",
     "theme": "dark"
-  },
-  "qna": "https://github.com/prodypanda/copytabs/discussions/categories/q-a"
+  }
 }

@@ -1,75 +1,121 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
+
+function log(msg: string): void {
+  console.log(`[L10n Validation] ${msg}`);
+}
+
+function logError(msg: string): void {
+  console.error(`[L10n Validation Error] ${msg}`);
+}
 
 function validateL10nFiles() {
-    const l10nDir = path.join(__dirname, '../../l10n');
-    const defaultBundle = path.join(l10nDir, 'bundle.l10n.json');
-    // const enBundle = path.join(l10nDir, 'bundle.l10n.en.json');
-    // const frBundle = path.join(l10nDir, 'bundle.l10n.fr.json');
+  const l10nDir = path.join(__dirname, "../../l10n");
+  const defaultBundle = path.join(l10nDir, "bundle.l10n.json");
+  const packageNls = path.join(__dirname, "../../package.nls.json");
 
-    // Vérifier si le répertoire existe
-    if (!fs.existsSync(l10nDir)) {
-        console.error('L10n directory does not exist');
-        return false;
+  // Check if directory exists
+  if (!fs.existsSync(l10nDir)) {
+    logError("L10n directory does not exist");
+    return false;
+  }
+
+  // Check if default bundle exists
+  if (!fs.existsSync(defaultBundle)) {
+    logError("Default bundle file does not exist");
+    return false;
+  }
+
+  // Check if package.nls.json exists
+  if (!fs.existsSync(packageNls)) {
+    logError("package.nls.json does not exist");
+    return false;
+  }
+
+  try {
+    const defaultBundleData = JSON.parse(
+      fs.readFileSync(defaultBundle, "utf8")
+    );
+    const packageNlsData = JSON.parse(fs.readFileSync(packageNls, "utf8"));
+
+    // Validate all required keys exist in default bundle
+    const defaultKeys = Object.keys(defaultBundleData);
+    const packageKeys = Object.keys(packageNlsData);
+
+    log(`Found ${defaultKeys.length} keys in bundle.l10n.json`);
+    log(`Found ${packageKeys.length} keys in package.nls.json`);
+
+    // Check language bundles
+    const languageBundles = fs
+      .readdirSync(l10nDir)
+      .filter(
+        (file) =>
+          file.startsWith("bundle.l10n.") &&
+          file.endsWith(".json") &&
+          file !== "bundle.l10n.json"
+      )
+      .map((file) => ({
+        name: file,
+        path: path.join(l10nDir, file),
+        lang: file.replace("bundle.l10n.", "").replace(".json", ""),
+      }));
+
+    let allValid = true;
+
+    // Validate each language bundle
+    languageBundles.forEach((bundle) => {
+      try {
+        const bundleData = JSON.parse(fs.readFileSync(bundle.path, "utf8"));
+        const bundleKeys = Object.keys(bundleData);
+
+        // Check for missing keys
+        const missingKeys = defaultKeys.filter(
+          (key) => !bundleKeys.includes(key)
+        );
+        const extraKeys = bundleKeys.filter(
+          (key) => !defaultKeys.includes(key)
+        );
+
+        if (missingKeys.length > 0) {
+          logError(`[${bundle.lang}] Missing keys: ${missingKeys.join(", ")}`);
+          allValid = false;
+        }
+
+        if (extraKeys.length > 0) {
+          log(`[${bundle.lang}] Extra keys: ${extraKeys.join(", ")}`);
+        }
+
+        if (missingKeys.length === 0 && extraKeys.length === 0) {
+          log(`[${bundle.lang}] ✓ All keys match default bundle`);
+        }
+      } catch (error) {
+        logError(
+          `Error parsing ${bundle.name}: ${
+            error instanceof Error ? error.message : "Unknown"
+          }`
+        );
+        allValid = false;
+      }
+    });
+
+    if (!allValid) {
+      return false;
     }
 
-    // Vérifier les fichiers de traduction
-    if (!fs.existsSync(defaultBundle)) {
-        console.error('Default bundle file does not exist');
-        return false;
-    }
-
-    // Check if English bundle exists, create it if not
-    // if (!fs.existsSync(enBundle)) {
-    //     console.warn('English bundle file does not exist, copying from default');
-    //     try {
-    //         fs.copyFileSync(defaultBundle, enBundle);
-    //     } catch (error) {
-    //         console.error('Error creating English bundle:', error);
-    //         return false;
-    //     }
-    // }
-
-    // if (!fs.existsSync(frBundle)) {
-    //     console.error('French bundle file does not exist');
-    //     return false;
-    // }
-
-    try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars`n        // @ts-ignore unused variable`n        const _defaultBundleData = JSON.parse(fs.readFileSync(defaultBundle, 'utf8'));
-        // const enTranslations = JSON.parse(fs.readFileSync(enBundle, 'utf8'));
-        // const frTranslations = JSON.parse(fs.readFileSync(frBundle, 'utf8'));
-
-        // Vérifier que toutes les clés sont présentes
-        // const enKeys = Object.keys(enTranslations);
-        // const frKeys = Object.keys(frTranslations);
-
-        // const missingInEn = defaultKeys.filter(key => !enKeys.includes(key));
-        // if (missingInEn.length > 0) {
-        //     console.error('Missing translations in English bundle:', missingInEn);
-        //     return false;
-        // }
-
-        // const missingInFr = defaultKeys.filter(key => !frKeys.includes(key));
-        // if (missingInFr.length > 0) {
-        //     console.error('Missing translations in French bundle:', missingInFr);
-        //     return false;
-        // }
-
-        console.log('L10n files validation successful');
-        return true;
-    } catch (error) {
-        console.error('Error validating l10n files:', error);
-        return false;
-    }
+    log("L10n files validation successful");
+    return true;
+  } catch (error) {
+    logError(
+      "Error validating l10n files:" +
+        (error instanceof Error ? error.message : "Unknown error")
+    );
+    return false;
+  }
 }
 
 if (require.main === module) {
-    const result = validateL10nFiles();
-    process.exit(result ? 0 : 1);
+  const result = validateL10nFiles();
+  process.exit(result ? 0 : 1);
 }
 
 export default validateL10nFiles;
-
-
-

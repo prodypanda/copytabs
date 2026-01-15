@@ -39,5 +39,17 @@
   "Copied tabs with custom format": "Tabs mit benutzerdefiniertem Format kopiert",
   "Latest": "Neueste",
   "Oldest": "Älteste",
-  "{0} selected tabs copied": "{0} ausgewählte Tabs kopierte"
+  "{0} selected tabs copied": "{0} ausgewählte Tabs kopierte",
+  "Pro Features Coming Soon": "Pro-Funktionen kommen bald",
+  "Coming in the Next Release:": "Kommt in der nächsten Version:",
+  "Switched to ": "Gewechselt zu ",
+  "An error occurred while copying tabs.": "Beim Kopieren von Tabs ist ein Fehler aufgetreten.",
+  "Output size ({0}MB) exceeds 50MB limit. Some content may be truncated.": "Ausgabegröße ({0}MB) überschreitet das Limit von 50MB. Einige Inhalte können gekürzt werden.",
+  "Clipboard Mode": "Zwischenablage-Modus",
+  "Tab Mode": "Tab-Modus",
+  "Format string is too long (max 10KB)": "Formatzeichenfolge ist zu lang (max. 10KB)",
+  "{0} copied selected tabs": "{0} ausgewählte Tabs kopiert",
+  "No history items yet": "Noch keine Verlaufselemente",
+  "Copy all opened tabs": "Alle geöffneten Tabs kopieren",
+  "Copy selected tabs": "Ausgewählte Tabs kopieren"
 }
