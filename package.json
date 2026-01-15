@@ -3,7 +3,7 @@
   "displayName": "%copytabs.displayName%",
   "description": "%copytabs.description%",
   "publisher": "Prodypanda",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./out/copytabs.js",
   "icon": "images/icon.png",
   "bugs": {
@@ -225,6 +225,31 @@
           "name": "%history.view.title%"
         }
       ]
+    },
+    "scripts": {
+      "vscode:prepublish": "npm run validate-l10n && npm run compile",
+      "compile": "tsc -p ./",
+      "watch": "tsc -watch -p ./",
+      "pretest": "npm run compile && npm run lint",
+      "lint": "eslint src --ext ts",
+      "test": "vscode-test",
+      "validate-l10n": "ts-node src/scripts/validateL10n.ts"
+    },
+    "dependencies": {
+      "@vscode/l10n": "^0.0.18"
+    },
+    "devDependencies": {
+      "@types/mocha": "^10.0.7",
+      "@types/node": "22.x",
+      "@types/vscode": "^1.91.0",
+      "@typescript-eslint/eslint-plugin": "^8.0.0",
+      "@typescript-eslint/parser": "^8.0.0",
+      "@vscode/l10n-dev": "^0.0.35",
+      "@vscode/test-cli": "^0.0.10",
+      "@vscode/test-electron": "^2.4.0",
+      "eslint": "^9.0.0",
+      "typescript": "^5.4.5",
+      "ts-node": "^10.9.1"
     }
   },
   "repository": {
@@ -232,31 +257,6 @@
     "url": "https://github.com/prodypanda/copytabs.git"
   },
   "license": "MIT",
-  "scripts": {
-    "vscode:prepublish": "npm run validate-l10n && npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test",
-    "validate-l10n": "ts-node src/scripts/validateL10n.ts"
-  },
-  "dependencies": {
-    "@vscode/l10n": "^0.0.18"
-  },
-  "devDependencies": {
-    "@types/mocha": "^10.0.7",
-    "@types/node": "22.x",
-    "@types/vscode": "^1.91.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "@vscode/l10n-dev": "^0.0.35",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.0",
-    "eslint": "^9.0.0",
-    "typescript": "^5.4.5",
-    "ts-node": "^10.9.1"
-  },
   "l10n": "./l10n",
   "author": {
     "name": "ProdyPanda",

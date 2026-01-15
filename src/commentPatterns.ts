@@ -1,6 +1,8 @@
 export const extensionToLanguage: { [key: string]: string } = {
   js: "javascript",
+  jsx: "javascriptreact",
   ts: "typescript",
+  tsx: "typescriptreact",
   py: "python",
   java: "java",
   cs: "csharp",
@@ -15,11 +17,27 @@ export const extensionToLanguage: { [key: string]: string } = {
   css: "css",
   scss: "scss",
   less: "less",
+  vue: "vue",
+  json: "json",
+  jsonc: "jsonc",
+  yml: "yaml",
+  yaml: "yaml",
+  sql: "sql",
+  sh: "shellscript",
+  bash: "shellscript",
+  zsh: "shellscript",
+  dockerfile: "dockerfile",
+  c: "c",
+  cpp: "cpp",
+  h: "cpp",
 };
 
 export const commentPatterns: { [key: string]: RegExp } = {
   javascript: /\/\/.*|\/\*[\s\S]*?\*\//g,
+  javascriptreact: /\/\/.*|\/\*[\s\S]*?\*\//g,
   typescript: /\/\/.*|\/\*[\s\S]*?\*\//g,
+  typescriptreact: /\/\/.*|\/\*[\s\S]*?\*\//g,
+  vue: /\/\/.*|\/\*[\s\S]*?\*\//g, // Simplification for script sections
   python: /#.*|'''[\s\S]*?'''|"""[\s\S]*?"""/g,
   java: /\/\/.*|\/\*[\s\S]*?\*\//g,
   c: /\/\/.*|\/\*[\s\S]*?\*\//g,
@@ -35,4 +53,9 @@ export const commentPatterns: { [key: string]: RegExp } = {
   css: /\/\*[\s\S]*?\*\//g,
   scss: /\/\/.*|\/\*[\s\S]*?\*\//g,
   less: /\/\/.*|\/\*[\s\S]*?\*\//g,
+  jsonc: /\/\/.*|\/\*[\s\S]*?\*\//g,
+  yaml: /#.*/g,
+  shellscript: /#.*/g,
+  dockerfile: /#.*/g,
+  sql: /--.*|\/\*[\s\S]*?\*\//g,
 };

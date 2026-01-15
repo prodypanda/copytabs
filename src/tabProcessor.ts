@@ -28,24 +28,20 @@ export class TabProcessor {
       failedFiles: [],
     };
 
-    // Process tabs sequentially in the chunk to avoid FS contention
     const results: string[] = [];
+    // Sequential processing within chunk to avoid CPU spiking/File Handle limits
     for (const tab of tabs) {
       if (token.isCancellationRequested) break;
-
       const result = await this.processTab(tab, settings, token);
+
       if (result.length > 0) {
         stats.successCount++;
         stats.processedFiles.push(tab.label);
-        // Rough token count estimation (spaces + 1)
-        stats.totalTokens += result.split(/\s+/).length;
+        stats.totalTokens += result.length; // Approximate char count as tokens for speed
         results.push(result);
       } else if (tab.input instanceof vscode.TabInputText) {
-        // Only count as failure if it was a text tab that returned empty
-        // (meaning it failed logic or was ignored, but we track actual errors in processTab)
-        // If it was skipped due to file type settings, it's not a "failure" per se,
-        // but if the user expected it, we might want to know.
-        // For now, we only count explicit failures in reading.
+        // If a text tab returns empty, check if it was due to filter or error
+        // We generally track errors in processTab
       }
     }
 
@@ -69,13 +65,11 @@ export class TabProcessor {
       const isDirty = tab.isDirty;
       let content = "";
 
-      // Optimization: If file is not dirty, read directly from disk to avoid
-      // overhead of creating a TextDocument model (language servers, etc.)
+      // Performance: Read from disk if not dirty to avoid expensive TextDocument model creation
       if (isDirty) {
         const document = await vscode.workspace.openTextDocument(uri);
         content = document.getText();
       } else {
-        // Check size before reading
         try {
           const stat = await vscode.workspace.fs.stat(uri);
           if (stat.size > settings.maxFileSize) {
@@ -86,29 +80,24 @@ export class TabProcessor {
           const fileData = await vscode.workspace.fs.readFile(uri);
           content = new TextDecoder("utf-8").decode(fileData);
         } catch (e) {
-          // Fallback to openTextDocument if fs fails (e.g. virtual filesystems)
+          // Fallback for virtual filesystems that might not support fs.stat/readFile directly
           const document = await vscode.workspace.openTextDocument(uri);
           content = document.getText();
         }
       }
 
+      // Double check content length after read
       if (content.length > settings.maxFileSize) {
         return `// File ${tab.label} exceeds size limit`;
       }
 
       const filePath = uri.fsPath;
       const relativePath = vscode.workspace.asRelativePath(uri);
-      // Remove leading dot-slash if present
-      const cleanRelativePath =
-        relativePath.startsWith("./") || relativePath.startsWith(".\\")
-          ? relativePath.slice(2)
-          : relativePath;
-
-      const fileExtension = path.extname(filePath).slice(1); // Remove dot
+      const fileExtension = path.extname(filePath).slice(1);
 
       if (this.shouldProcessFile(fileExtension, settings)) {
         content = this.processContent(content, fileExtension, settings);
-        return `// File: ${cleanRelativePath}\n\n${content}`;
+        return `// File: ${relativePath}\n\n${content}`;
       }
     } catch (error) {
       handleError(`Error processing tab ${tab.label}`, error);
@@ -128,11 +117,10 @@ export class TabProcessor {
       return false;
     }
 
-    // Check inclusions (if empty, include all)
+    // Check inclusions
     if (settings.includeFileTypes.length === 0) {
       return true;
     }
-
     return settings.includeFileTypes.some((e) => e.toLowerCase() === ext);
   }
 
@@ -142,7 +130,6 @@ export class TabProcessor {
     settings: CopySettings
   ): string {
     let processed = content;
-
     if (!settings.includeComments) {
       processed = this.removeComments(processed, extension);
     }

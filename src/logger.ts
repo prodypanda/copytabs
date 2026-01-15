@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 
 /**
- * Logger utility class for extension-wide logging
- * Uses VS Code's output channel to display logs to users
+ * Logger utility class for extension-wide logging.
+ * Creates a dedicated "copytabs" channel in the Output view.
  */
 export class Logger {
   private static output: vscode.OutputChannel | null = null;
@@ -23,33 +23,43 @@ export class Logger {
    * Log an info-level message
    */
   static info(message: string): void {
-    this.getOutput().info(`[INFO] ${message}`);
+    const timestamp = new Date().toLocaleTimeString();
+    this.getOutput().appendLine(`[INFO ${timestamp}] ${message}`);
   }
 
   /**
    * Log a warning-level message
    */
   static warn(message: string, error?: Error): void {
+    const timestamp = new Date().toLocaleTimeString();
     const errorDetails = error ? ` - ${error.message}` : "";
-    this.getOutput().warn(`[WARN] ${message}${errorDetails}`);
+    this.getOutput().appendLine(
+      `[WARN ${timestamp}] ${message}${errorDetails}`
+    );
   }
 
   /**
-   * Log an error-level message
+   * Log an error-level message and optionally show the channel
    */
-  static error(message: string, error?: Error): void {
-    const errorDetails = error ? ` - ${error.message}` : "";
-    this.getOutput().error(`[ERROR] ${message}${errorDetails}`);
-    if (error?.stack) {
-      this.getOutput().error(`Stack: ${error.stack}`);
-    }
+  static error(message: string, error?: Error | unknown): void {
+    const timestamp = new Date().toLocaleTimeString();
+    const errObj = error instanceof Error ? error : new Error(String(error));
+    const errorDetails = ` - ${errObj.message}`;
+    const stack = errObj.stack ? `\nStack: ${errObj.stack}` : "";
+
+    this.getOutput().appendLine(
+      `[ERROR ${timestamp}] ${message}${errorDetails}${stack}`
+    );
+
+    // Automatically show the logs on error so the user knows what happened
+    this.show();
   }
 
   /**
-   * Show the output channel to the user
+   * Show the output channel to the user (Focus it)
    */
   static show(): void {
-    this.getOutput().show();
+    this.getOutput().show(true);
   }
 
   /**

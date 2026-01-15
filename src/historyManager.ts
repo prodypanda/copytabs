@@ -3,13 +3,15 @@ import ConfigManager from "./config";
 
 const HISTORY_KEY = "copytabs.history";
 const HISTORY_LIMIT = 10;
-// Limit individual item size to 200KB to prevent globalState bloat
-const MAX_ITEM_SIZE = 200 * 1024;
+// CRITICAL: Limit individual item size for storage to prevent GlobalState bloat.
+// VS Code GlobalState is not a database for massive files.
+const MAX_STORAGE_SIZE = 200 * 1024; // 200KB
 
 interface HistoryItem {
   content: string;
   description: string;
   timestamp: number;
+  truncated?: boolean;
 }
 
 export class HistoryManager {
@@ -25,19 +27,27 @@ export class HistoryManager {
   public async addToHistory(content: string, description: string) {
     const timestamp = new Date().getTime();
 
-    // SAFETY: Truncate large content
     let safeContent = content;
-    if (safeContent.length > MAX_ITEM_SIZE) {
+    let isTruncated = false;
+
+    // Safety: Truncate large content before storing
+    if (safeContent.length > MAX_STORAGE_SIZE) {
       safeContent =
-        safeContent.substring(0, MAX_ITEM_SIZE) +
-        `\n\n[TRUNCATED: Content exceeded ${
-          MAX_ITEM_SIZE / 1024
-        }KB limit for history storage]`;
+        safeContent.substring(0, MAX_STORAGE_SIZE) +
+        `\n\n[...Content truncated for history storage. Original size: ${(
+          content.length / 1024
+        ).toFixed(2)}KB...]`;
+      isTruncated = true;
     }
 
-    this.history.unshift({ content: safeContent, description, timestamp });
+    this.history.unshift({
+      content: safeContent,
+      description,
+      timestamp,
+      truncated: isTruncated,
+    });
 
-    // Limit history to 10 items
+    // Enforce item limit
     if (this.history.length > HISTORY_LIMIT) {
       this.history = this.history.slice(0, HISTORY_LIMIT);
     }
@@ -49,6 +59,14 @@ export class HistoryManager {
   public async copyHistoryItem(index: number) {
     const item = this.history[index];
     if (item) {
+      if (item.truncated) {
+        vscode.window.showWarningMessage(
+          vscode.l10n.t(
+            "This item was truncated in history storage and is incomplete."
+          )
+        );
+      }
+
       if (ConfigManager.isClipboardMode()) {
         await vscode.env.clipboard.writeText(item.content);
         vscode.window.showInformationMessage(
@@ -57,6 +75,7 @@ export class HistoryManager {
       } else {
         const doc = await vscode.workspace.openTextDocument({
           content: item.content,
+          language: "plaintext",
         });
         await vscode.window.showTextDocument(doc);
       }
@@ -86,11 +105,6 @@ export class HistoryManager {
 
   private async saveHistory() {
     await this.context.globalState.update(HISTORY_KEY, this.history);
-  }
-
-  public getFormattedTimestamp(timestamp: number): string {
-    const date = new Date(timestamp);
-    return date.toLocaleString();
   }
 
   public getRemainingSlots(): number {

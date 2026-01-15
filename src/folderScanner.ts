@@ -50,10 +50,11 @@ export class FolderScanner {
   ): Promise<FolderScanResult> {
     try {
       const folderUri = vscode.Uri.file(folderPath);
+      // Ensure it is a directory
       const stat = await vscode.workspace.fs.stat(folderUri);
-
       if ((stat.type & vscode.FileType.Directory) === 0) {
-        throw new Error(`Path is not a directory: ${folderPath}`);
+        // Should not happen if VS Code context menu sends a folder uri
+        throw new Error("Target is not a directory");
       }
 
       const rootName = path.basename(folderPath);
@@ -83,7 +84,6 @@ export class FolderScanner {
     }
 
     try {
-      // Use VS Code FS API (Async)
       const entries = await vscode.workspace.fs.readDirectory(dirUri);
       const items: FolderItem[] = [];
 
@@ -112,9 +112,9 @@ export class FolderScanner {
               currentDepth + 1
             );
           } catch (error) {
+            // Log but don't stop the whole scan
             Logger.warn(
-              `Could not scan subdirectory: ${fullUri.fsPath}`,
-              error instanceof Error ? error : undefined
+              `Skipping subdirectory due to access error: ${fullUri.fsPath}`
             );
           }
         }
@@ -129,9 +129,11 @@ export class FolderScanner {
         return a.name.localeCompare(b.name);
       });
     } catch (error) {
-      Logger.error(
-        `Error reading directory: ${dirUri.fsPath}`,
-        error instanceof Error ? error : undefined
+      // If we can't read the directory (permission denied), log and return empty
+      Logger.warn(
+        `Error reading directory: ${dirUri.fsPath} - ${
+          (error as Error).message
+        }`
       );
       return [];
     }

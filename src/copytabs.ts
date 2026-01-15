@@ -8,17 +8,19 @@ import { HistoryViewProvider } from "./historyView";
 import { HistoryManager } from "./historyManager";
 import { Logger } from "./logger";
 import { TextDecoder } from "util";
+import { FolderSelectView } from "./folderSelectView";
 
-/**
- * Maximum output size limit (50MB) to prevent memory issues
- */
-const MAX_OUTPUT_SIZE = 50 * 1024 * 1024;
+// FALLBACK LOGGING: This shows up in "Help > Toggle Developer Tools"
+console.log("CopyTabs: File loaded successfully.");
 
 let statusBarManager: StatusBarManager;
 let historyManager: HistoryManager;
 
 export async function activate(context: vscode.ExtensionContext) {
-  Logger.info(vscode.l10n.t("copytabs: Activating extension"));
+  // FORCE SHOW LOGS IMMEDIATELY
+  Logger.show();
+  Logger.info("------------------------------------------------");
+  Logger.info("copytabs: Activating extension version 1.0.5");
 
   try {
     historyManager = new HistoryManager(context);
@@ -79,6 +81,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
     Logger.info(vscode.l10n.t("copytabs: Extension started"));
   } catch (error) {
+    console.error("CopyTabs Activation Error:", error); // Fallback to DevTools
     Logger.error(
       vscode.l10n.t("copytabs: Failed to start extension"),
       error instanceof Error ? error : undefined
@@ -89,19 +92,53 @@ export async function activate(context: vscode.ExtensionContext) {
   }
 }
 
-async function copyFolder(uri?: vscode.Uri) {
+async function copyFolder(uri?: vscode.Uri, uris?: vscode.Uri[]) {
+  Logger.show();
   Logger.info("copyFolder command triggered");
+
   try {
-    if (!uri || !uri.fsPath) {
-      vscode.window.showErrorMessage(vscode.l10n.t("Please select a folder."));
+    let targetUri = uri;
+
+    // 1. Handle multi-selection or direct command palette invocation
+    if (!targetUri && uris && uris.length > 0) {
+      targetUri = uris[0];
+    }
+
+    // 2. If still no URI (Command Palette), prompt user
+    if (!targetUri) {
+      const selection = await vscode.window.showOpenDialog({
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false,
+        title: vscode.l10n.t("Select Folder to Copy"),
+      });
+
+      if (selection && selection.length > 0) {
+        targetUri = selection[0];
+      } else {
+        return; // User cancelled
+      }
+    }
+
+    if (!targetUri) {
+      Logger.warn("No target URI found.");
       return;
     }
 
-    const { FolderSelectView } = await import("./folderSelectView");
-    const result = await FolderSelectView.showFolderSelection(uri.fsPath);
+    // 3. AUTO-FIX: If user right-clicked a FILE, switch to its PARENT FOLDER
+    const stat = await vscode.workspace.fs.stat(targetUri);
+    if ((stat.type & vscode.FileType.File) !== 0) {
+      Logger.info("Selected item is a file, switching to parent folder");
+      targetUri = vscode.Uri.joinPath(targetUri, "..");
+    }
+
+    Logger.info(`Scanning folder: ${targetUri.fsPath}`);
+
+    // 4. Show the selection view
+    const result = await FolderSelectView.showFolderSelection(targetUri.fsPath);
 
     if (!result.selectedFiles || result.selectedFiles.length === 0) {
-      vscode.window.showInformationMessage(vscode.l10n.t("No files selected."));
+      Logger.info("No files selected or operation cancelled");
       return;
     }
 
@@ -110,25 +147,25 @@ async function copyFolder(uri?: vscode.Uri) {
     let failedCount = 0;
     const failedFiles: string[] = [];
     const decoder = new TextDecoder("utf-8");
-    const maxFileSize = ConfigManager.getConfig("maxFileSize", 5242880);
+    const settings = ConfigManager.getSettings();
 
     for (const filePath of result.selectedFiles) {
+      if (combinedContent.length >= ConfigManager.MAX_OUTPUT_SIZE) {
+        vscode.window.showWarningMessage(
+          vscode.l10n.t("Output size limit reached. Some files were skipped.")
+        );
+        break;
+      }
+
       try {
-        // Safety check for output size
-        if (combinedContent.length >= MAX_OUTPUT_SIZE) {
-          vscode.window.showWarningMessage(
-            vscode.l10n.t("Output limit reached. Some files were skipped.")
-          );
-          break;
-        }
-
         const fileUri = vscode.Uri.file(filePath);
+        const fileStat = await vscode.workspace.fs.stat(fileUri);
 
-        // Check file size before reading
-        const stat = await vscode.workspace.fs.stat(fileUri);
-        if (stat.size > maxFileSize) {
+        if (fileStat.size > settings.maxFileSize) {
           failedCount++;
-          failedFiles.push(`${path.basename(filePath)} (Too large)`);
+          failedFiles.push(
+            `${vscode.workspace.asRelativePath(filePath)} (Too large)`
+          );
           continue;
         }
 
@@ -136,11 +173,11 @@ async function copyFolder(uri?: vscode.Uri) {
         const content = decoder.decode(fileData);
 
         const relativePath = vscode.workspace.asRelativePath(filePath);
-        combinedContent += `// File: ${relativePath}\n\n${content}\n\n------------------------\n\n`;
+        combinedContent += `// File: ${relativePath}\n\n${content}\n\n${settings.separatorLine}\n\n`;
         successCount++;
       } catch (error) {
         failedCount++;
-        failedFiles.push(path.basename(filePath));
+        failedFiles.push(vscode.workspace.asRelativePath(filePath));
         Logger.error(
           `Failed to read file: ${filePath}`,
           error instanceof Error ? error : undefined
@@ -162,7 +199,16 @@ async function copyFolder(uri?: vscode.Uri) {
       stats
     );
   } catch (error) {
-    handleError(vscode.l10n.t("Failed to copy folder"), error);
+    Logger.error(
+      "Critical error in copyFolder",
+      error instanceof Error ? error : undefined
+    );
+    Logger.show();
+    vscode.window.showErrorMessage(
+      `Copy Folder Failed: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`
+    );
   }
 }
 
@@ -185,9 +231,9 @@ async function handleContent(
     if (stats.failedCount > 0) {
       message += `-❌ Failed: ${stats.failedCount} \n`;
       if (stats.failedFiles.length > 0) {
-        const displayFailed = stats.failedFiles.slice(0, 5);
-        const remaining = stats.failedFiles.length - 5;
-        message += `-❌ files: ${displayFailed.join(", ")}${
+        const displayFailed = stats.failedFiles.slice(0, 3).join(", ");
+        const remaining = stats.failedFiles.length - 3;
+        message += `-❌ files: ${displayFailed}${
           remaining > 0 ? ` +${remaining} more` : ""
         }\n`;
       }
@@ -206,58 +252,14 @@ async function handleContent(
   }
 
   vscode.window.showInformationMessage(message, { modal: false });
-  // Don't add to history if content is massive to save memory/storage
-  if (content.length < MAX_OUTPUT_SIZE) {
+
+  if (content.length > 0 && content.length < ConfigManager.MAX_OUTPUT_SIZE) {
     historyManager.addToHistory(content, description);
   }
 }
 
-// Helper to get current settings
-function getCurrentSettings(): CopySettings {
-  const config = vscode.workspace.getConfiguration("copytabs");
-  return {
-    includeFileTree: config.get("includeFileTree", true),
-    treePosition: config.get("structuredTreePosition", "start"),
-    includeFileTypes: config.get("includeFileTypes", []),
-    excludeFileTypes: config.get("excludeFileTypes", []),
-    separatorLine: config.get("separatorLine", "------------------------"),
-    includeComments: config.get("includeComments", true),
-    includeLineNumbers: config.get("includeLineNumbers", false),
-    maxFileSize: config.get("maxFileSize", 5242880),
-  };
-}
-
-async function copyAllTabs() {
-  try {
-    const settings = getCurrentSettings();
-    const openedTabs = vscode.window.tabGroups.all.flatMap(
-      (group) => group.tabs
-    );
-    if (!openedTabs.length) {
-      vscode.window.showInformationMessage(
-        vscode.l10n.t("No tabs are currently open.")
-      );
-      return;
-    }
-
-    await performCopyOperation(
-      openedTabs,
-      settings,
-      `${openedTabs.length} tabs copied`
-    );
-  } catch (error) {
-    handleError("Error in copyAllTabs", error);
-    vscode.window.showErrorMessage(
-      vscode.l10n.t("An error occurred while copying tabs.")
-    );
-  }
-}
-
-async function performCopyOperation(
-  tabs: vscode.Tab[],
-  settings: CopySettings,
-  description: string
-) {
+async function processTabsPipeline(tabs: vscode.Tab[], description: string) {
+  const settings = ConfigManager.getSettings();
   let combinedContent = "";
   let copyStats: CopyStatistics = {
     successCount: 0,
@@ -287,14 +289,17 @@ async function performCopyOperation(
     }
   );
 
-  if (combinedContent.length > MAX_OUTPUT_SIZE) {
+  if (combinedContent.length > ConfigManager.MAX_OUTPUT_SIZE) {
     vscode.window.showWarningMessage(
       vscode.l10n.t(
-        "Output size ({0}MB) exceeds 50MB limit. Some content may be truncated.",
+        "Output size ({0}MB) exceeds 50MB limit. Content truncated.",
         Math.round(combinedContent.length / 1024 / 1024)
       )
     );
-    combinedContent = combinedContent.substring(0, MAX_OUTPUT_SIZE);
+    combinedContent = combinedContent.substring(
+      0,
+      ConfigManager.MAX_OUTPUT_SIZE
+    );
   }
 
   if (settings.includeFileTree) {
@@ -315,6 +320,50 @@ async function performCopyOperation(
   }
 }
 
+async function copyAllTabs() {
+  try {
+    const openedTabs = vscode.window.tabGroups.all.flatMap(
+      (group) => group.tabs
+    );
+    if (!openedTabs.length) {
+      vscode.window.showInformationMessage(
+        vscode.l10n.t("No tabs are currently open.")
+      );
+      return;
+    }
+    await processTabsPipeline(openedTabs, `${openedTabs.length} tabs copied`);
+  } catch (error) {
+    handleError("Error in copyAllTabs", error);
+    vscode.window.showErrorMessage(
+      vscode.l10n.t("An error occurred while copying tabs.")
+    );
+  }
+}
+
+async function copySelectedTabs() {
+  const allTabs = vscode.window.tabGroups.all.flatMap((group) => group.tabs);
+
+  const selectedItems = await vscode.window.showQuickPick(
+    allTabs.map((tab) => ({
+      label: tab.label,
+      description:
+        tab.input instanceof vscode.TabInputText
+          ? vscode.workspace.asRelativePath(tab.input.uri)
+          : "",
+      tab: tab,
+    })),
+    { canPickMany: true, placeHolder: vscode.l10n.t("Select tabs to copy") }
+  );
+
+  if (selectedItems && selectedItems.length > 0) {
+    const selectedTabs = selectedItems.map((item) => item.tab);
+    await processTabsPipeline(
+      selectedTabs,
+      vscode.l10n.t("{0} selected tabs copied", selectedTabs.length)
+    );
+  }
+}
+
 async function processTabsWithProgress(
   tabs: vscode.Tab[],
   settings: CopySettings,
@@ -326,7 +375,6 @@ async function processTabsWithProgress(
     1,
     Math.floor(ConfigManager.MAX_CHUNK_SIZE / maxFileSize)
   );
-
   const results: string[] = [];
   const totalStats: CopyStatistics = {
     successCount: 0,
@@ -363,34 +411,6 @@ async function processTabsWithProgress(
   }
 
   return [results, totalStats];
-}
-
-async function copySelectedTabs() {
-  const allTabs = vscode.window.tabGroups.all.flatMap((group) => group.tabs);
-
-  const selectedItems = await vscode.window.showQuickPick(
-    allTabs.map((tab) => ({
-      label: tab.label,
-      description:
-        tab.input instanceof vscode.TabInputText
-          ? vscode.workspace.asRelativePath(tab.input.uri)
-          : "",
-      tab: tab,
-    })),
-    { canPickMany: true, placeHolder: vscode.l10n.t("Select tabs to copy") }
-  );
-
-  if (selectedItems && selectedItems.length > 0) {
-    // Fix: Use the standard processing pipeline to respect settings and concurrency
-    const settings = getCurrentSettings();
-    const selectedTabs = selectedItems.map((item) => item.tab);
-
-    await performCopyOperation(
-      selectedTabs,
-      settings,
-      vscode.l10n.t("{0} selected tabs copied", selectedTabs.length)
-    );
-  }
 }
 
 async function copyTabsCustomFormat() {
@@ -431,29 +451,27 @@ async function copyTabsCustomFormat() {
     );
     let combinedContent = "";
 
-    const maxFileSize = ConfigManager.getConfig("maxFileSize", 5242880);
+    const settings = ConfigManager.getSettings();
     const decoder = new TextDecoder("utf-8");
 
-    // Sequential processing to avoid OOM with openTextDocument
     for (const tab of openedTabs) {
-      if (combinedContent.length > MAX_OUTPUT_SIZE) break;
+      if (combinedContent.length > ConfigManager.MAX_OUTPUT_SIZE) break;
 
       if (tab.input instanceof vscode.TabInputText) {
         try {
-          let content = "";
           const uri = tab.input.uri;
+          let content = "";
 
-          // Optimized reading (Dirty vs Disk)
           if (tab.isDirty) {
             const doc = await vscode.workspace.openTextDocument(uri);
             content = doc.getText();
           } else {
             const stat = await vscode.workspace.fs.stat(uri);
-            if (stat.size <= maxFileSize) {
+            if (stat.size <= settings.maxFileSize) {
               const bytes = await vscode.workspace.fs.readFile(uri);
               content = decoder.decode(bytes);
             } else {
-              content = `[File too large: ${stat.size} bytes]`;
+              content = `[File skipped: Size ${stat.size} exceeds limit]`;
             }
           }
 
@@ -464,11 +482,8 @@ async function copyTabsCustomFormat() {
             .replace("{separator}", "------------------------")
             .replace(/\[NL\]/g, "\n");
           combinedContent += formattedContent;
-        } catch (err) {
-          Logger.error(
-            `Failed to process tab for custom format: ${tab.label}`,
-            err as Error
-          );
+        } catch (e) {
+          Logger.warn(`Failed to process tab for custom format: ${tab.label}`);
         }
       }
     }

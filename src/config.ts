@@ -3,8 +3,10 @@ import { CopySettings } from "./types";
 
 export class ConfigManager {
   private static readonly CONFIG_NAME = "copytabs";
-  public static readonly MAX_FILE_SIZE = 5242880; // 5MB
-  public static readonly MAX_CHUNK_SIZE = 5242880; // Base chunk size for calculations
+  // Public constants for global usage
+  public static readonly MAX_FILE_SIZE = 5242880; // 5MB default
+  public static readonly MAX_CHUNK_SIZE = 5242880; // 5MB chunking baseline
+  public static readonly MAX_OUTPUT_SIZE = 50 * 1024 * 1024; // 50MB hard limit
 
   public static getSettings(): CopySettings {
     const config = vscode.workspace.getConfiguration(this.CONFIG_NAME);
@@ -33,12 +35,11 @@ export class ConfigManager {
       !currentMode,
       vscode.ConfigurationTarget.Global
     );
-    // The configuration change event will handle the UI updates
   }
 
   public static getConfig<T>(key: string, defaultValue: T): T {
     const config = vscode.workspace.getConfiguration(this.CONFIG_NAME);
-    return config.get(key, defaultValue);
+    return config.get(key, defaultValue) ?? defaultValue;
   }
 
   public static async updateConfig(key: string, value: any): Promise<void> {
@@ -47,5 +48,4 @@ export class ConfigManager {
   }
 }
 
-// Add a default export to ensure the module is properly recognized
 export default ConfigManager;
